@@ -12,6 +12,8 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- jsPDF for Instant Clinical PDF Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     try {
       if (window.tailwind) {
@@ -226,57 +228,128 @@
     </div>
   </div>
 
-  <!-- Camera / Photo Patient ID & Sticker Scanner Modal -->
+  <!-- Camera / Sticker OCR Modal -->
   <div id="ocr-modal" class="fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-t-8 border-p-blue">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-t-8 border-p-pink">
       <div class="flex items-center justify-between mb-3">
         <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
           <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="6" width="20" height="14" rx="4" fill="#07bdff" stroke="#0f172a" stroke-width="2"/>
-            <path d="M8 6l1.5-2.5h5L16 6" fill="#f5e45f" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
-            <circle cx="12" cy="13" r="4" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
-            <circle cx="12" cy="13" r="1.8" fill="#ff68bd"/>
-            <circle cx="18" cy="9.5" r="1.2" fill="#f5e45f"/>
+            <rect x="2" y="6" width="20" height="14" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+            <circle cx="12" cy="13" r="3.5" fill="#07bdff" stroke="#0f172a" stroke-width="1.8"/>
+            <circle cx="17.5" cy="9.5" r="1.2" fill="#f5e45f"/>
           </svg>
           <span>Scan Patient ID / Hospital Sticker</span>
         </h3>
         <button type="button" onclick="closeOCRModal()" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">✕</button>
       </div>
-      <p class="text-xs text-slate-600 mb-4">Take a photo with your iPad/phone camera or upload an image of the patient's IC, hospital registration sticker, or referral slip to auto-fill Name, IC/MRN, Age &amp; Gender.</p>
+      <p class="text-xs text-slate-600 mb-4">Take a photo of the patient's hospital sticker, referral slip, or MyKad/IC to auto-fill Name, IC/MRN, Age, and Gender.</p>
 
-      <div class="space-y-3">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <label class="cursor-pointer px-4 py-3 rounded-xl bg-p-blue text-white font-extrabold text-xs sm:text-sm text-center shadow-sm hover:opacity-95 transition flex items-center justify-center gap-2">
-            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="7" width="20" height="13" rx="3.5" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
-              <circle cx="12" cy="13.5" r="3.5" fill="#07bdff" stroke="#0f172a" stroke-width="2"/>
-              <path d="M18 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z" fill="#f5e45f" stroke="#0f172a" stroke-width="1.3" stroke-linejoin="round"/>
-            </svg>
-            <span>Open Camera</span>
-            <input type="file" id="ocr-camera-input" accept="image/*" capture="environment" onchange="handleOCRImageSelect(event)" class="hidden" />
-          </label>
-          <label class="cursor-pointer px-4 py-3 rounded-xl bg-p-purple text-white font-extrabold text-xs sm:text-sm text-center shadow-sm hover:opacity-95 transition flex items-center justify-center gap-2">
-            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="4" width="18" height="16" rx="3.5" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
-              <circle cx="8.5" cy="9.5" r="2" fill="#f5e45f" stroke="#0f172a" stroke-width="1.5"/>
-              <path d="M4 17l5-5 3.5 3.5 3-3L20 17" fill="#a6e23d" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Choose Photo</span>
-            <input type="file" id="ocr-file-input" accept="image/*" onchange="handleOCRImageSelect(event)" class="hidden" />
-          </label>
-        </div>
+      <input type="file" id="ocr-camera-input" accept="image/*" capture="environment" onchange="handleOCRImageSelect(event)" class="hidden" />
+      <input type="file" id="ocr-file-input" accept="image/*" onchange="handleOCRImageSelect(event)" class="hidden" />
 
-        <div id="ocr-preview-box" class="hidden rounded-2xl border-2 border-slate-200 bg-slate-50 p-3 text-center">
-          <img id="ocr-preview-img" src="" alt="Scanned Patient ID Preview" class="max-h-52 mx-auto rounded-xl object-contain" />
-        </div>
-
-        <div id="ocr-status-box" class="hidden p-3.5 rounded-xl bg-sky-50 border border-sky-200 text-xs font-bold text-p-blue text-center">
-          Scanning image &amp; extracting patient details...
-        </div>
+      <div class="grid grid-cols-2 gap-2.5 mb-3">
+        <button type="button" onclick="document.getElementById('ocr-camera-input').click()" class="px-4 py-3 rounded-2xl bg-p-pink text-white font-extrabold text-xs shadow-md hover:opacity-95 transition">
+          Open Camera
+        </button>
+        <button type="button" onclick="document.getElementById('ocr-file-input').click()" class="px-4 py-3 rounded-2xl bg-p-blue text-white font-extrabold text-xs shadow-md hover:opacity-95 transition">
+          Choose Photo
+        </button>
       </div>
 
-      <div class="flex justify-end gap-2.5 mt-5 pt-3 border-t border-slate-200">
+      <div id="ocr-preview-box" class="hidden mt-3 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50">
+        <img id="ocr-preview-img" src="" alt="Scanned Sticker Preview" class="w-full max-h-48 object-contain" />
+      </div>
+      <div id="ocr-status-box" class="hidden mt-3 p-3 rounded-xl bg-teal-50 border border-teal-200 text-xs font-bold text-p-teal text-center"></div>
+
+      <div class="flex justify-end mt-4">
         <button type="button" onclick="closeOCRModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save to Google Drive Modal -->
+  <div id="gdrive-modal" class="fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-t-8 border-p-blue">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
+          <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none">
+            <path d="M9 3h6l6 10.5-3 5.5H6l-3-5.5L9 3z" fill="#ffffff" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M9 3l6 10.5H21L15 3H9z" fill="#f5e45f" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M3 13.5L9 3l3 5.2-6 10.8-3-5.5z" fill="#a6e23d" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M6 19h12l3-5.5H9L6 19z" fill="#07bdff" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+          <span>Save SOAP Note to Google Drive</span>
+        </h3>
+        <button type="button" onclick="closeGoogleDriveModal()" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">✕</button>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200 mb-4">
+        <div class="text-[11px] font-extrabold text-p-blue uppercase">Ready File Name</div>
+        <div id="gdrive-filename-preview" class="text-xs sm:text-sm font-extrabold text-slate-900 break-all mt-0.5">Neuro_OT_SOAP_Note.pdf</div>
+      </div>
+
+      <div class="space-y-2.5">
+        <!-- Option 1: iPad / Mobile Share Sheet directly to Google Drive App -->
+        <button type="button" onclick="sharePDFToGoogleDrive()" class="w-full px-4 py-3 rounded-2xl bg-p-teal text-white font-extrabold text-xs sm:text-sm shadow-md hover:opacity-95 transition flex items-center justify-between gap-3">
+          <span class="flex items-center gap-2.5 text-left">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="2" width="12" height="20" rx="2.5" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+              <path d="M12 13V6m0 0l-3 3m3-3l3 3" stroke="#ff68bd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>
+              <span class="block">Send to Google Drive App (iPad / Mobile)</span>
+              <span class="block text-[11px] font-semibold text-white/90">Opens Share Sheet — tap "Drive" to save straight into your folder</span>
+            </span>
+          </span>
+          <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-white/20 shrink-0">Share</span>
+        </button>
+
+        <!-- Option 2: Download PDF & Open Google Drive in Browser (PC) -->
+        <button type="button" onclick="downloadAndOpenGoogleDrive()" class="w-full px-4 py-3 rounded-2xl bg-p-blue text-white font-extrabold text-xs sm:text-sm shadow-md hover:opacity-95 transition flex items-center justify-between gap-3">
+          <span class="flex items-center gap-2.5 text-left">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+              <path d="M9 3l6 10.5H21L15 3H9z" fill="#f5e45f" stroke="#0f172a" stroke-width="1.6"/>
+              <path d="M3 13.5L9 3l3 5.2-6 10.8-3-5.5z" fill="#a6e23d" stroke="#0f172a" stroke-width="1.6"/>
+              <path d="M6 19h12l3-5.5H9L6 19z" fill="#ffffff" stroke="#0f172a" stroke-width="1.6"/>
+            </svg>
+            <span>
+              <span class="block">Download PDF &amp; Open Google Drive (PC)</span>
+              <span class="block text-[11px] font-semibold text-white/90">Saves PDF file &amp; launches Google Drive so you can drop it in</span>
+            </span>
+          </span>
+          <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-white/20 shrink-0">Open</span>
+        </button>
+
+        <!-- Option 3: Download Google Docs Editable (.doc) -->
+        <button type="button" onclick="downloadSOAPAsDoc()" class="w-full px-4 py-2.5 rounded-2xl bg-p-yellow text-slate-900 font-extrabold text-xs sm:text-sm shadow-sm hover:brightness-105 transition flex items-center justify-between gap-3">
+          <span class="flex items-center gap-2.5 text-left">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+              <path d="M6 3h8l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+              <path d="M8 11h8M8 15h5" stroke="#07bdff" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+            <span>Download Editable Google Docs / Word (.doc)</span>
+          </span>
+          <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-slate-900/10 shrink-0">.DOC</span>
+        </button>
+      </div>
+
+      <!-- Optional Direct API Upload via Google OAuth Client ID -->
+      <div class="mt-4 pt-3 border-t border-slate-200">
+        <details class="text-xs">
+          <summary class="cursor-pointer font-bold text-slate-600 hover:text-slate-900">Advanced: Direct 1-Click Google Drive API Upload (Optional Client ID)</summary>
+          <div class="mt-2.5 space-y-2 p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <input type="text" id="gdrive-client-id" placeholder="Paste Google OAuth 2.0 Web Client ID (optional)..." class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs focus:border-p-blue focus:outline-none" />
+            <button type="button" onclick="directUploadToGoogleDriveAPI()" class="w-full py-2 rounded-xl bg-slate-900 text-white font-extrabold text-xs hover:bg-slate-800 transition">
+              Authorize &amp; Upload PDF Directly to My Drive
+            </button>
+          </div>
+        </details>
+      </div>
+
+      <div id="gdrive-status-box" class="hidden mt-3 p-3 rounded-xl bg-teal-50 border border-teal-200 text-xs font-bold text-p-teal text-center"></div>
+
+      <div class="flex justify-end mt-4">
+        <button type="button" onclick="closeGoogleDriveModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">Close</button>
       </div>
     </div>
   </div>
@@ -1570,6 +1643,10 @@
           </div>
         </div>
 
+        <div id="records-sync-banner" class="mb-4 px-4 py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 flex flex-wrap items-center justify-between gap-2">
+          <span>Storage Status: Initializing...</span>
+        </div>
+
         <!-- Grouped By Day Container -->
         <div id="saved-records-container" class="space-y-5">
           <div class="p-8 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 text-center text-sm text-slate-500 font-semibold">
@@ -1611,6 +1688,22 @@
               </svg>
               <span>Copy Full Note</span>
             </button>
+            <button type="button" onclick="extractSOAPAsPDF()" class="px-4 py-2.5 rounded-xl bg-p-pink text-white font-extrabold text-xs sm:text-sm shadow-md hover:opacity-95 transition inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                <path d="M6 3h8l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" fill="#ffffff" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+                <rect x="6.5" y="12" width="11" height="6" rx="1.5" fill="#f5e45f" stroke="#0f172a" stroke-width="1.5"/>
+                <path d="M12 7v4m0 0l-2-2m2 2l2-2" stroke="#ff68bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Extract as PDF</span>
+            </button>
+            <button type="button" onclick="openGoogleDriveModal()" class="px-4 py-2.5 rounded-xl bg-p-blue text-white font-extrabold text-xs sm:text-sm shadow-md hover:opacity-95 transition inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                <path d="M9 3l6 10.5H21L15 3H9z" fill="#f5e45f" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M3 13.5L9 3l3 5.2-6 10.8-3-5.5z" fill="#a6e23d" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M6 19h12l3-5.5H9L6 19z" fill="#ffffff" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+              <span>Save to Google Drive</span>
+            </button>
           </div>
         </div>
 
@@ -1639,32 +1732,48 @@
 
     window.firebaseServices = {
       ready: false,
+      mode: 'connecting',
       db: null,
       auth: null,
       user: null,
       appId: typeof __app_id !== 'undefined' ? __app_id : 'neuro-ot-soap-suite',
       records: [],
+      sessionFallbackRecords: [],
       unsubscribe: null
     };
 
-    async function initFirebaseCloudSync() {
+    function updateSyncStatusIndicators(pillHtml, bannerText) {
       const pill = document.getElementById('cloud-sync-pill');
+      if (pill) pill.innerHTML = pillHtml;
+      const banner = document.getElementById('records-sync-banner');
+      if (banner) banner.innerHTML = bannerText;
+    }
+
+    async function initFirebaseCloudSync() {
       try {
         if (typeof __firebase_config === 'undefined' || !__firebase_config) {
-          if (pill) {
-            pill.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span><span>LOCAL / BRIDGE MODE</span>';
-          }
+          window.firebaseServices.mode = 'session';
+          updateSyncStatusIndicators(
+            '<span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span><span>SESSION MEMORY MODE</span>',
+            '<span>Storage Status: <strong>Session Memory Active</strong> (Records save immediately in this session; connect Firebase config for cross-device iPad ↔ PC cloud sync).</span>'
+          );
           if (typeof window.renderSavedRecordsList === 'function') window.renderSavedRecordsList();
           return;
         }
 
-        const firebaseConfig = JSON.parse(__firebase_config);
+        const firebaseConfig = typeof __firebase_config === 'string'
+          ? JSON.parse(__firebase_config)
+          : __firebase_config;
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
         if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
+          try {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } catch (tokenErr) {
+            await signInAnonymously(auth);
+          }
         } else {
           await signInAnonymously(auth);
         }
@@ -1673,16 +1782,20 @@
         window.firebaseServices.auth = auth;
         window.firebaseServices.user = auth.currentUser;
         window.firebaseServices.ready = true;
+        window.firebaseServices.mode = 'cloud';
 
-        if (pill) {
-          pill.innerHTML = '<span class="w-2 h-2 rounded-full bg-lime-400 inline-block"></span><span>CLOUD SYNC ACTIVE (IPAD ↔ PC)</span>';
-        }
+        updateSyncStatusIndicators(
+          '<span class="w-2 h-2 rounded-full bg-lime-400 inline-block"></span><span>CLOUD SYNC ACTIVE (IPAD ↔ PC)</span>',
+          '<span>Storage Status: <strong class="text-p-teal">Cloud Sync Active</strong> — Records saved on iPad automatically appear on your Office PC using the same Sync Workspace Key.</span>'
+        );
 
         subscribeToCloudRecords();
       } catch (err) {
-        if (pill) {
-          pill.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400 inline-block"></span><span>OFFLINE MODE</span>';
-        }
+        window.firebaseServices.mode = 'session';
+        updateSyncStatusIndicators(
+          '<span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span><span>SESSION MEMORY MODE</span>',
+          '<span>Storage Status: <strong>Session Memory Active</strong> (Cloud auth unavailable in this preview; records are saved in your current session).</span>'
+        );
         if (typeof window.renderSavedRecordsList === 'function') window.renderSavedRecordsList();
       }
     }
@@ -1704,40 +1817,95 @@
         }
       }, () => {
         if (typeof window.showToast === 'function') {
-          window.showToast('Cloud sync listener interrupted', 'bg-p-orange');
+          window.showToast('Cloud sync listener interrupted — using session cache', 'bg-p-orange');
         }
       });
     }
 
-    window.saveCloudDoc = async function(docId, payloadObj) {
+    window.firebaseReadyPromise = initFirebaseCloudSync();
+
+    function upsertSessionRecord(docId, payloadObj) {
       const svc = window.firebaseServices;
-      if (!svc.ready || !svc.user) {
-        if (window.parent && window.parent !== window) {
-          window.parent.postMessage({ type: 'OT_SAVE_RECORD', module: 'Neuro OT', ...payloadObj }, '*');
-          return 'bridge-sent';
-        }
-        return null;
-      }
-      const colRef = collection(svc.db, 'artifacts', svc.appId, 'public', 'data', 'neuro_ot_records');
-      if (docId) {
-        const docRef = doc(svc.db, 'artifacts', svc.appId, 'public', 'data', 'neuro_ot_records', docId);
-        await setDoc(docRef, payloadObj);
-        return docId;
+      const assignedId = docId || `session_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      const entry = { id: assignedId, ...payloadObj };
+      const idx = svc.sessionFallbackRecords.findIndex(r => r.id === assignedId);
+      if (idx >= 0) {
+        svc.sessionFallbackRecords[idx] = entry;
       } else {
-        const added = await addDoc(colRef, payloadObj);
-        return added.id;
+        svc.sessionFallbackRecords.unshift(entry);
+      }
+      if (!svc.ready) {
+        svc.records = [...svc.sessionFallbackRecords];
+      }
+      if (typeof window.renderSavedRecordsList === 'function') {
+        window.renderSavedRecordsList();
+      }
+      return assignedId;
+    }
+
+    window.saveCloudDoc = async function(docId, payloadObj) {
+      if (window.firebaseReadyPromise) {
+        await window.firebaseReadyPromise;
+      }
+      const svc = window.firebaseServices;
+
+      if (window.collectorBridgeActive && window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'OT_SAVE_RECORD', module: 'Neuro OT', ...payloadObj }, '*');
+      }
+
+      if (!svc.ready || !svc.user) {
+        return upsertSessionRecord(docId, payloadObj);
+      }
+
+      try {
+        const colRef = collection(svc.db, 'artifacts', svc.appId, 'public', 'data', 'neuro_ot_records');
+        let finalId = docId;
+        if (docId && !String(docId).startsWith('session_')) {
+          const docRef = doc(svc.db, 'artifacts', svc.appId, 'public', 'data', 'neuro_ot_records', docId);
+          await setDoc(docRef, payloadObj);
+        } else {
+          const added = await addDoc(colRef, payloadObj);
+          finalId = added.id;
+        }
+
+        // Optimistically update local list immediately so Saved Records reflects it without waiting
+        const existingIdx = svc.records.findIndex(r => r.id === finalId);
+        const newRecord = { id: finalId, ...payloadObj };
+        if (existingIdx >= 0) {
+          svc.records[existingIdx] = newRecord;
+        } else {
+          svc.records.unshift(newRecord);
+        }
+        if (typeof window.renderSavedRecordsList === 'function') {
+          window.renderSavedRecordsList();
+        }
+        return finalId;
+      } catch (err) {
+        return upsertSessionRecord(docId, payloadObj);
       }
     };
 
     window.deleteCloudDoc = async function(docId) {
+      if (window.firebaseReadyPromise) {
+        await window.firebaseReadyPromise;
+      }
       const svc = window.firebaseServices;
-      if (!svc.ready || !svc.user || !docId) return false;
+      if (!docId) return false;
+
+      svc.sessionFallbackRecords = svc.sessionFallbackRecords.filter(r => r.id !== docId);
+      svc.records = svc.records.filter(r => r.id !== docId);
+      if (typeof window.renderSavedRecordsList === 'function') {
+        window.renderSavedRecordsList();
+      }
+
+      if (!svc.ready || !svc.user || String(docId).startsWith('session_')) {
+        return true;
+      }
+
       const docRef = doc(svc.db, 'artifacts', svc.appId, 'public', 'data', 'neuro_ot_records', docId);
       await deleteDoc(docRef);
       return true;
     };
-
-    initFirebaseCloudSync();
   </script>
 
   <script>
@@ -4846,16 +5014,21 @@
       try {
         const targetId = saveAsNewCopy ? null : state.activeRecordId;
         const savedId = await window.saveCloudDoc(targetId, docPayload);
-        if (savedId && savedId !== 'bridge-sent') {
+        if (savedId) {
           state.activeRecordId = savedId;
-          showToast(`Saved "${ptName}" (${ptDate}) to Cloud Sync!`, 'bg-p-teal');
-        } else if (savedId === 'bridge-sent') {
-          showToast(`Sent "${ptName}" to Master Collector App!`, 'bg-p-teal');
+          // Clear any restrictive date/search filter so newly saved record is always visible
+          const dateFilterEl = document.getElementById('filter-record-date');
+          if (dateFilterEl && dateFilterEl.value && dateFilterEl.value !== ptDate) {
+            dateFilterEl.value = '';
+          }
+          renderSavedRecordsList();
+          const modeLabel = window.firebaseServices?.ready ? 'Cloud Sync' : 'Saved Records';
+          showToast(`Saved "${ptName}" (${ptDate}) to ${modeLabel}!`, 'bg-p-teal');
         } else {
-          showToast('Cloud connection not ready yet. Please try again in a moment.', 'bg-p-orange');
+          showToast('Could not save record. Please try again.', 'bg-p-orange');
         }
       } catch (err) {
-        showToast('Error saving record to Cloud Sync', 'bg-p-orange');
+        showToast('Error saving record', 'bg-p-orange');
       }
     }
 
@@ -5017,10 +5190,15 @@
     }
 
     // Listen for Collector App parent bridge messages if hosted inside an iframe
+    window.collectorBridgeActive = false;
     window.addEventListener('message', (event) => {
       const msg = event.data;
       if (!msg || typeof msg !== 'object') return;
+      if (msg.type === 'OT_COLLECTOR_HELLO') {
+        window.collectorBridgeActive = true;
+      }
       if (msg.type === 'OT_LOAD_RECORD' && msg.payloadJson) {
+        window.collectorBridgeActive = true;
         try {
           applySnapshotToApp(JSON.parse(msg.payloadJson), msg.docId || null);
           switchTab('tab-soap');
@@ -5206,6 +5384,308 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
         showToast('SOAP Note copied to clipboard!', 'bg-p-teal');
       } catch (err) {
         showToast('Select text and press Ctrl+C / Cmd+C to copy', 'bg-p-orange');
+      }
+    }
+
+    // =========================================================
+    // EXTRACT AS PDF & SAVE TO GOOGLE DRIVE HANDLERS
+    // =========================================================
+    function getSOAPExportFilename(ext = 'pdf') {
+      const rawName = (document.getElementById('pt_name')?.value || 'Patient').trim();
+      const safeName = rawName.replace(/[^a-zA-Z0-9_-]+/g, '_').replace(/^_+|_+$/g, '') || 'Patient';
+      const dateStr = (document.getElementById('pt_date')?.value || new Date().toISOString().split('T')[0]).trim();
+      return `Neuro_OT_SOAP_${safeName}_${dateStr}.${ext}`;
+    }
+
+    function buildSOAPJsPDF() {
+      updateSOAPOutput();
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        return null;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const margin = 14;
+      const contentWidth = pageWidth - margin * 2;
+      let y = 14;
+
+      // Top Clinical Header Banner
+      doc.setFillColor(15, 23, 42);
+      doc.roundedRect(margin, y, contentWidth, 18, 3, 3, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text('OCCUPATIONAL THERAPY — MEDICAL NEURO SOAP NOTE', margin + 5, y + 7.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(166, 226, 61);
+      doc.text('Medical Neurology Rehabilitation Clinical Documentation', margin + 5, y + 13.5);
+      y += 23;
+
+      const rawText = document.getElementById('final-soap-textarea').value || '';
+      const lines = rawText.split('\n');
+
+      const sectionColors = {
+        'S — SUBJECTIVE': [255, 104, 189],
+        'O — OBJECTIVE': [0, 198, 158],
+        'A — ASSESSMENT': [253, 122, 57],
+        'P — PLAN': [168, 144, 255]
+      };
+
+      const ensurePageSpace = (neededHeight = 8) => {
+        if (y + neededHeight > pageHeight - 16) {
+          doc.addPage();
+          y = 16;
+        }
+      };
+
+      lines.forEach((rawLine) => {
+        const trimmed = rawLine.trim();
+        if (!trimmed || trimmed.startsWith('====') || trimmed === 'OCCUPATIONAL THERAPY — MEDICAL NEURO SOAP NOTE') {
+          return;
+        }
+
+        // Section Header Pill
+        if (sectionColors[trimmed]) {
+          ensurePageSpace(14);
+          y += 2;
+          const rgb = sectionColors[trimmed];
+          doc.setFillColor(rgb[0], rgb[1], rgb[2]);
+          doc.roundedRect(margin, y, contentWidth, 7.5, 2, 2, 'F');
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(10);
+          doc.setTextColor(15, 23, 42);
+          doc.text(trimmed, margin + 3.5, y + 5.2);
+          y += 11;
+          return;
+        }
+
+        // Demographic Key-Value Line
+        if (/^(Patient Name|IC \/ MRN \/ ID|Age \/ Gender|Date|Affected Side|Family History|Occupation|Diagnosis)\s*:/.test(trimmed)) {
+          ensurePageSpace(6);
+          const colonIdx = trimmed.indexOf(':');
+          const keyPart = trimmed.slice(0, colonIdx + 1);
+          const valPart = trimmed.slice(colonIdx + 1).trim();
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(9.2);
+          doc.setTextColor(30, 41, 59);
+          doc.text(keyPart, margin + 2, y);
+          doc.setFont('helvetica', 'normal');
+          const wrappedVal = doc.splitTextToSize(valPart, contentWidth - 36);
+          wrappedVal.forEach((wLine, idx) => {
+            if (idx > 0) {
+              y += 4.5;
+              ensurePageSpace(5);
+            }
+            doc.text(wLine, margin + 34, y);
+          });
+          y += 5;
+          return;
+        }
+
+        // Bullet or Body Line
+        const isBullet = trimmed.startsWith('-') || trimmed.startsWith('•') || trimmed.startsWith('*') || /^\d+\./.test(trimmed);
+        doc.setFont('helvetica', isBullet ? 'bold' : 'normal');
+        doc.setFontSize(9.2);
+        doc.setTextColor(30, 41, 59);
+
+        const indent = rawLine.startsWith('    ') ? 8 : (rawLine.startsWith('  ') ? 4 : 1);
+        const wrapped = doc.splitTextToSize(trimmed, contentWidth - indent);
+        wrapped.forEach((wLine, idx) => {
+          ensurePageSpace(5.5);
+          if (idx > 0) doc.setFont('helvetica', 'normal');
+          doc.text(wLine, margin + indent, y);
+          y += 4.8;
+        });
+      });
+
+      // Add Footer & Page Numbers on Every Page
+      const totalPages = doc.internal.getNumberOfPages();
+      for (let p = 1; p <= totalPages; p++) {
+        doc.setPage(p);
+        doc.setDrawColor(203, 213, 225);
+        doc.line(margin, pageHeight - 11, pageWidth - margin, pageHeight - 11);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(100, 116, 139);
+        doc.text('Made by Ezlyana | All Rights Reserved', margin, pageHeight - 6.5);
+        doc.text(`Page ${p} of ${totalPages}`, pageWidth - margin - 18, pageHeight - 6.5);
+      }
+
+      const filename = getSOAPExportFilename('pdf');
+      const pdfBlob = doc.output('blob');
+      return { doc, filename, pdfBlob };
+    }
+
+    function extractSOAPAsPDF() {
+      try {
+        const built = buildSOAPJsPDF();
+        if (!built) {
+          showToast('PDF generator still loading, please try again in 1 second', 'bg-p-orange');
+          return;
+        }
+        built.doc.save(built.filename);
+        showToast(`Extracted PDF: ${built.filename}`, 'bg-p-pink');
+      } catch (err) {
+        showToast('Could not generate PDF. Please try copying the note.', 'bg-p-orange');
+      }
+    }
+
+    function openGoogleDriveModal() {
+      updateSOAPOutput();
+      const filename = getSOAPExportFilename('pdf');
+      const prevEl = document.getElementById('gdrive-filename-preview');
+      if (prevEl) prevEl.innerText = filename;
+      const statusBox = document.getElementById('gdrive-status-box');
+      if (statusBox) statusBox.classList.add('hidden');
+
+      const modal = document.getElementById('gdrive-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeGoogleDriveModal() {
+      const modal = document.getElementById('gdrive-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    async function sharePDFToGoogleDrive() {
+      try {
+        const built = buildSOAPJsPDF();
+        if (!built) {
+          showToast('PDF engine loading, please try again', 'bg-p-orange');
+          return;
+        }
+        const pdfFile = new File([built.pdfBlob], built.filename, { type: 'application/pdf' });
+        if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+          await navigator.share({
+            files: [pdfFile],
+            title: built.filename,
+            text: 'Neuro OT Clinical SOAP Note'
+          });
+          closeGoogleDriveModal();
+          showToast('Shared SOAP PDF to Google Drive!', 'bg-p-teal');
+        } else {
+          // Desktop fallback: download PDF and open Google Drive tab
+          downloadAndOpenGoogleDrive();
+        }
+      } catch (err) {
+        if (err && err.name !== 'AbortError') {
+          downloadAndOpenGoogleDrive();
+        }
+      }
+    }
+
+    function downloadAndOpenGoogleDrive() {
+      try {
+        const built = buildSOAPJsPDF();
+        if (built) {
+          built.doc.save(built.filename);
+        }
+        window.open('https://drive.google.com/drive/my-drive', '_blank', 'noopener');
+        closeGoogleDriveModal();
+        showToast('PDF downloaded & Google Drive opened!', 'bg-p-blue');
+      } catch (err) {
+        showToast('Please allow popups or upload the downloaded PDF to Drive', 'bg-p-orange');
+      }
+    }
+
+    function downloadSOAPAsDoc() {
+      updateSOAPOutput();
+      const rawText = document.getElementById('final-soap-textarea').value || '';
+      const escaped = rawText
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br/>');
+
+      const htmlDoc = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta charset="utf-8"><title>Neuro OT SOAP Note</title></head>
+        <body style="font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.45;">
+          ${escaped}
+        </body>
+        </html>
+      `;
+      const blob = new Blob(['\ufeff', htmlDoc], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = getSOAPExportFilename('doc');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      closeGoogleDriveModal();
+      showToast('Editable .DOC downloaded for Google Docs / Word!', 'bg-p-yellow text-slate-900');
+    }
+
+    function directUploadToGoogleDriveAPI() {
+      const clientId = (document.getElementById('gdrive-client-id')?.value || '').trim();
+      const statusBox = document.getElementById('gdrive-status-box');
+      if (!clientId) {
+        showToast('Please paste a valid Google OAuth Client ID first, or use the buttons above!', 'bg-p-orange');
+        return;
+      }
+
+      statusBox.classList.remove('hidden');
+      statusBox.innerHTML = `${cuteSvg('hourglass', 'w-4 h-4')} Connecting to Google Drive API...`;
+
+      const startTokenFlow = () => {
+        try {
+          const tokenClient = window.google.accounts.oauth2.initTokenClient({
+            client_id: clientId,
+            scope: 'https://www.googleapis.com/auth/drive.file',
+            callback: async (tokenResponse) => {
+              if (!tokenResponse || !tokenResponse.access_token) {
+                statusBox.innerHTML = `${cuteSvg('warning', 'w-4 h-4')} Google authorization cancelled or failed.`;
+                return;
+              }
+              try {
+                statusBox.innerHTML = `${cuteSvg('hourglass', 'w-4 h-4')} Uploading PDF directly to your Google Drive...`;
+                const built = buildSOAPJsPDF();
+                const metadata = {
+                  name: built.filename,
+                  mimeType: 'application/pdf'
+                };
+                const form = new FormData();
+                form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+                form.append('file', built.pdfBlob);
+
+                const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+                  method: 'POST',
+                  headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+                  body: form
+                });
+                if (!res.ok) throw new Error(`Drive API ${res.status}`);
+                closeGoogleDriveModal();
+                showToast(`Uploaded "${built.filename}" straight to Google Drive!`, 'bg-p-teal');
+              } catch (uploadErr) {
+                statusBox.innerHTML = `${cuteSvg('warning', 'w-4 h-4')} Direct upload failed. Please use "Download PDF & Open Google Drive".`;
+              }
+            }
+          });
+          tokenClient.requestAccessToken({ prompt: '' });
+        } catch (e) {
+          statusBox.innerHTML = `${cuteSvg('warning', 'w-4 h-4')} Invalid Client ID format.`;
+        }
+      };
+
+      if (window.google && window.google.accounts && window.google.accounts.oauth2) {
+        startTokenFlow();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.defer = true;
+        script.onload = startTokenFlow;
+        script.onerror = () => {
+          statusBox.innerHTML = `${cuteSvg('warning', 'w-4 h-4')} Unable to load Google Identity script in this window.`;
+        };
+        document.head.appendChild(script);
       }
     }
 
