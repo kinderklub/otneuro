@@ -53,7 +53,7 @@
       overflow-x: hidden;
     }
 
-    /* Colorful Gradient Hero Banner (Restored) */
+    /* Colorful Gradient Hero Banner */
     .hero-gradient-banner {
       background: linear-gradient(135deg, #ff68bd 0%, #8b5cf6 36%, #07bdff 72%, #00c69e 100%);
     }
@@ -418,7 +418,7 @@
   </div>
 
   <!-- ========================================================= -->
-  <!-- RESTORED COLORFUL GRADIENT BANNER HEADER & NAVIGATION     -->
+  <!-- COLORFUL GRADIENT BANNER HEADER & NAVIGATION              -->
   <!-- ========================================================= -->
   <div class="max-w-7xl w-full mx-auto px-3 sm:px-6 pt-3 sm:pt-5">
     <header class="hero-gradient-banner rounded-3xl p-5 sm:p-7 text-white shadow-xl relative overflow-hidden">
@@ -667,7 +667,7 @@
 
           <div class="min-w-0">
             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Date of Session</label>
-            <input type="date" id="pt_date" onchange="updateSOAPOutput()" class="w-full max-w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm bg-white" />
+            <input type="date" id="pt_date" value="" onchange="updateSOAPOutput()" class="w-full max-w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm bg-white" />
           </div>
         </div>
 
@@ -942,7 +942,7 @@
                     <path d="M8 12V5.5a1.5 1.5 0 013 0V11m0-5.5a1.5 1.5 0 013 0V11m0-4.5a1.5 1.5 0 013 0V13c0 4.5-3 7.5-7 7.5S4 18 4 14v-3.5a1.5 1.5 0 013 0V13" fill="#f5e45f" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   <span>Hand Manipulation Skills &amp; Neuromuscular Building Blocks</span>
-                  <span id="hms-side-badge" class="px-2.5 py-0.5 rounded-full bg-p-teal text-white text-xs font-bold">Right (Affected Hand)</span>
+                  <span id="hms-side-badge" class="px-2.5 py-0.5 rounded-full bg-p-teal text-white text-xs font-bold">Affected Hand</span>
                 </h3>
                 <p class="text-xs text-slate-500">All options start unticked by default. Only ticked skills or typed clinical observations will be included in the SOAP note.</p>
               </div>
@@ -1551,7 +1551,7 @@
 
         <div class="mb-4 p-3 rounded-xl bg-sky-50 border border-sky-200 flex flex-wrap items-center gap-3">
           <span class="text-xs font-extrabold text-slate-700 uppercase">Affected Side Assessed:</span>
-          <button type="button" id="power_side_right" onclick="setAffectedSide('Right')" class="px-4 py-1.5 rounded-lg bg-p-blue text-white font-bold text-xs">Right Side</button>
+          <button type="button" id="power_side_right" onclick="setAffectedSide('Right')" class="px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs">Right Side</button>
           <button type="button" id="power_side_left" onclick="setAffectedSide('Left')" class="px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs">Left Side</button>
         </div>
 
@@ -1581,7 +1581,7 @@
 
         <div class="mb-4 p-3 rounded-xl bg-pink-50 border border-pink-200 flex flex-wrap items-center gap-3">
           <span class="text-xs font-extrabold text-slate-700 uppercase">Affected Side Assessed:</span>
-          <button type="button" id="tone_side_right" onclick="setAffectedSide('Right')" class="px-4 py-1.5 rounded-lg bg-p-pink text-white font-bold text-xs">Right Side</button>
+          <button type="button" id="tone_side_right" onclick="setAffectedSide('Right')" class="px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs">Right Side</button>
           <button type="button" id="tone_side_left" onclick="setAffectedSide('Left')" class="px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs">Left Side</button>
         </div>
 
@@ -1664,7 +1664,7 @@
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
             <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Compiled Neuro OT SOAP Note</h2>
-            <p class="text-xs sm:text-sm text-slate-600">Ready to copy and paste directly into EMR / Hospital Clinical Documentation</p>
+            <p class="text-xs sm:text-sm text-slate-600">Starts completely blank — only what you write or tick appears here, ready to copy &amp; paste directly</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
@@ -1707,7 +1707,7 @@
           </div>
         </div>
 
-        <textarea id="final-soap-textarea" rows="24" class="mono-note w-full p-4 sm:p-5 rounded-2xl border-2 border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm leading-relaxed focus:border-p-teal focus:outline-none"></textarea>
+        <textarea id="final-soap-textarea" rows="24" placeholder="" class="mono-note w-full p-4 sm:p-5 rounded-2xl border-2 border-slate-300 bg-slate-50 text-slate-900 text-xs sm:text-sm leading-relaxed focus:border-p-teal focus:outline-none"></textarea>
       </div>
     </section>
 
@@ -1868,7 +1868,6 @@
           finalId = added.id;
         }
 
-        // Optimistically update local list immediately so Saved Records reflects it without waiting
         const existingIdx = svc.records.findIndex(r => r.id === finalId);
         const newRecord = { id: finalId, ...payloadObj };
         if (existingIdx >= 0) {
@@ -1910,7 +1909,7 @@
 
   <script>
     // =========================================================
-    // CUTE COLORFUL SVG ICON LIBRARY (REPLACES ALL EMOJIS)
+    // CUTE COLORFUL SVG ICON LIBRARY
     // =========================================================
     function cuteSvg(name, cls = 'w-4 h-4') {
       const icons = {
@@ -1926,14 +1925,14 @@
     }
 
     // =========================================================
-    // GLOBAL APPLICATION STATE
+    // GLOBAL APPLICATION STATE (ALL UNTICKED / BLANK BY DEFAULT)
     // =========================================================
     const state = {
       activeRecordId: null,
       workspaceKey: 'ezlyana-neuro-ot',
       pendingDeleteId: null,
       gender: '',
-      affectedSide: 'Right',
+      affectedSide: '',
       dominantSide: '',
       maritalStatus: '',
       unemployed: false,
@@ -2360,18 +2359,20 @@
       closeResetModal();
       state.activeRecordId = null;
 
-      // Demographics
+      // Demographics (Keep completely empty by default)
       document.getElementById('pt_name').value = '';
       document.getElementById('pt_mrn').value = '';
       document.getElementById('pt_age').value = '';
-      document.getElementById('pt_date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('pt_date').value = '';
       document.getElementById('pt_dx').value = '';
       state.gender = '';
+      state.affectedSide = '';
       state.dominantSide = '';
       state.maritalStatus = '';
       state.unemployed = false;
       document.getElementById('pt_family_history').value = '';
       document.getElementById('pt_occupation').value = '';
+      document.getElementById('hms-side-badge').innerText = 'Affected Hand';
       updateChoiceButtons();
 
       // Subjective
@@ -2489,9 +2490,11 @@
     }
 
     function setAffectedSide(side) {
-      state.affectedSide = side;
+      state.affectedSide = (state.affectedSide === side) ? '' : side;
       updateChoiceButtons();
-      document.getElementById('hms-side-badge').innerText = `${side} (Affected Hand)`;
+      document.getElementById('hms-side-badge').innerText = state.affectedSide
+        ? `${state.affectedSide} (Affected Hand)`
+        : 'Affected Hand';
       renderMusclePower();
       renderMuscleTone();
       updateSOAPOutput();
@@ -2574,11 +2577,11 @@
       const hh = document.getElementById('house_highrise');
       if (hl && hh) {
         hl.className = state.houseType === 'Landed'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs sm:text-sm shadow-sm transition'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition';
+          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
+          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
         hh.className = state.houseType === 'High Rise'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-purple text-white font-extrabold text-xs sm:text-sm shadow-sm transition'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition';
+          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-purple text-white font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
+          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
       }
 
       // Wheelchair Accessibility buttons
@@ -2586,11 +2589,11 @@
       const wcna = document.getElementById('wc_non_accessible');
       if (wca && wcna) {
         wca.className = state.wheelchairAccess === 'Wheelchair Accessible'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-lime text-slate-900 font-extrabold text-xs sm:text-sm shadow-sm transition'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition';
+          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-lime text-slate-900 font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
+          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
         wcna.className = state.wheelchairAccess === 'Wheelchair Non-Accessible'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-pink text-white font-extrabold text-xs sm:text-sm shadow-sm transition'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition';
+          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-pink text-white font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
+          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
       }
     }
 
@@ -3679,7 +3682,6 @@
         if (score <= 9) return 'Severe';
         return 'Extremely Severe';
       }
-      // Stress (S)
       if (score <= 7) return 'Normal';
       if (score <= 9) return 'Mild';
       if (score <= 12) return 'Moderate';
@@ -4543,6 +4545,7 @@
     function renderMusclePower() {
       const container = document.getElementById('power-items-container');
       const grades = [0, 1, 2, 3, 4, 5];
+      const sideLabel = state.affectedSide ? `${state.affectedSide} (Affected)` : 'Affected Limb';
       container.innerHTML = powerMuscles.map(m => {
         const btns = grades.map(g => {
           const isSel = m.grade !== null && m.grade === g;
@@ -4555,7 +4558,7 @@
         return `
           <div class="p-3 rounded-xl bg-sky-50/50 border border-sky-200 flex items-center justify-between gap-2">
             <div>
-              <div class="text-xs font-bold text-p-blue uppercase">${state.affectedSide} (Affected)</div>
+              <div class="text-xs font-bold text-p-blue uppercase">${sideLabel}</div>
               <div class="text-sm font-extrabold text-slate-900">${m.name}</div>
             </div>
             <div class="flex items-center gap-1">${btns}</div>
@@ -4582,7 +4585,8 @@
       const scored = powerMuscles.filter(m => m.grade !== null);
       if (scored.length === 0) return '';
       const list = scored.map(m => `${m.name}: ${m.grade}/5`).join(', ');
-      return `Muscle Power (MRC Scale — ${state.affectedSide} Affected): [${list}]`;
+      const sideSuffix = state.affectedSide ? ` — ${state.affectedSide} Affected` : '';
+      return `Muscle Power (MRC Scale${sideSuffix}): [${list}]`;
     }
 
     function insertPowerToNote() {
@@ -4592,7 +4596,7 @@
         return;
       }
       appendToObjectiveTests(line);
-      showToast(`Muscle Power (${state.affectedSide}) inserted!`, 'bg-p-blue');
+      showToast('Muscle Power inserted!', 'bg-p-blue');
     }
 
     // =========================================================
@@ -4613,6 +4617,7 @@
     function renderMuscleTone() {
       const container = document.getElementById('tone-items-container');
       const grades = ['0', '1', '1+', '2', '3', '4'];
+      const sideLabel = state.affectedSide ? `${state.affectedSide} (Affected)` : 'Affected Limb';
       container.innerHTML = toneMuscles.map(m => {
         const btns = grades.map(g => {
           const isSel = m.grade !== null && m.grade === g;
@@ -4625,7 +4630,7 @@
         return `
           <div class="p-3 rounded-xl bg-pink-50/50 border border-pink-200 flex items-center justify-between gap-2">
             <div>
-              <div class="text-xs font-bold text-p-pink uppercase">${state.affectedSide} (Affected)</div>
+              <div class="text-xs font-bold text-p-pink uppercase">${sideLabel}</div>
               <div class="text-sm font-extrabold text-slate-900">${m.name}</div>
             </div>
             <div class="flex items-center gap-1">${btns}</div>
@@ -4652,7 +4657,8 @@
       const scored = toneMuscles.filter(m => m.grade !== null);
       if (scored.length === 0) return '';
       const list = scored.map(m => `${m.name}: MAS ${m.grade}`).join(', ');
-      return `Muscle Tone (Modified Ashworth Scale — ${state.affectedSide} Affected): [${list}]`;
+      const sideSuffix = state.affectedSide ? ` — ${state.affectedSide} Affected` : '';
+      return `Muscle Tone (Modified Ashworth Scale${sideSuffix}): [${list}]`;
     }
 
     function insertToneToNote() {
@@ -4662,7 +4668,7 @@
         return;
       }
       appendToObjectiveTests(line);
-      showToast(`Muscle Tone (${state.affectedSide}) inserted!`, 'bg-p-pink');
+      showToast('Muscle Tone inserted!', 'bg-p-pink');
     }
 
     // =========================================================
@@ -4813,17 +4819,19 @@
       document.getElementById('pt_name').value = d.pt_name || '';
       document.getElementById('pt_mrn').value = d.pt_mrn || '';
       document.getElementById('pt_age').value = d.pt_age || '';
-      document.getElementById('pt_date').value = d.pt_date || new Date().toISOString().split('T')[0];
+      document.getElementById('pt_date').value = d.pt_date || '';
       document.getElementById('pt_dx').value = d.pt_dx || '';
       state.gender = d.gender || '';
-      state.affectedSide = d.affectedSide || 'Right';
+      state.affectedSide = d.affectedSide || '';
       state.dominantSide = d.dominantSide || '';
       state.maritalStatus = d.maritalStatus || '';
       document.getElementById('pt_family_history').value = d.pt_family_history || '';
       state.unemployed = Boolean(d.unemployed);
       document.getElementById('pt_occupation').value = d.pt_occupation || '';
       updateChoiceButtons();
-      document.getElementById('hms-side-badge').innerText = `${state.affectedSide} (Affected Hand)`;
+      document.getElementById('hms-side-badge').innerText = state.affectedSide
+        ? `${state.affectedSide} (Affected Hand)`
+        : 'Affected Hand';
 
       const s = snap.subjective || {};
       document.getElementById('s_quote').value = s.s_quote || '';
@@ -5005,7 +5013,7 @@
         ptMrn,
         ptDate,
         ptDx,
-        affectedSide: state.affectedSide,
+        affectedSide: state.affectedSide || '',
         summaryBadges: badgeParts.length ? badgeParts.join(' • ') : 'Profile & Clinical Notes',
         updatedAt: new Date().toISOString(),
         payloadJson: JSON.stringify(snapshot)
@@ -5016,7 +5024,6 @@
         const savedId = await window.saveCloudDoc(targetId, docPayload);
         if (savedId) {
           state.activeRecordId = savedId;
-          // Clear any restrictive date/search filter so newly saved record is always visible
           const dateFilterEl = document.getElementById('filter-record-date');
           if (dateFilterEl && dateFilterEl.value && dateFilterEl.value !== ptDate) {
             dateFilterEl.value = '';
@@ -5145,13 +5152,16 @@
         const cardsHtml = dayRecords.map(rec => {
           const isLoaded = state.activeRecordId === rec.id;
           const timeStr = rec.updatedAt ? new Date(rec.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+          const sideBadge = rec.affectedSide
+            ? `<span class="px-2 py-0.5 rounded-lg bg-purple-100 text-p-purple text-xs font-bold">${rec.affectedSide} Affected</span>`
+            : '';
           return `
             <div class="p-4 rounded-2xl bg-white border-2 ${isLoaded ? 'border-p-teal ring-2 ring-teal-200' : 'border-slate-200'} shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div class="space-y-1">
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="font-extrabold text-base text-slate-900">${rec.ptName || 'Unnamed Patient'}</span>
                   <span class="px-2 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">${rec.ptMrn || 'No ID'}</span>
-                  <span class="px-2 py-0.5 rounded-lg bg-purple-100 text-p-purple text-xs font-bold">${rec.affectedSide || 'Right'} Affected</span>
+                  ${sideBadge}
                   ${isLoaded ? '<span class="px-2 py-0.5 rounded-full bg-p-teal text-white text-[11px] font-extrabold">Currently Open</span>' : ''}
                 </div>
                 <div class="text-xs text-slate-600 font-medium">${rec.ptDx || 'Diagnosis not specified'}</div>
@@ -5208,33 +5218,67 @@
     });
 
     // =========================================================
-    // LIVE SOAP NOTE COMPILER & CLIPBOARD COPY
+    // LIVE SOAP NOTE COMPILER (100% BLANK UNTIL WRITTEN/TICKED)
     // =========================================================
     function updateSOAPOutput() {
-      const ptName = document.getElementById('pt_name').value.trim() || 'Not specified';
-      const ptMrn = document.getElementById('pt_mrn').value.trim() || 'Not specified';
-      const ptAge = document.getElementById('pt_age').value.trim() || 'Not specified';
-      const ptDate = document.getElementById('pt_date').value || 'Not specified';
-      const ptGender = state.gender || 'Not specified';
-      const ptAffected = state.affectedSide || 'Not specified';
-      const ptDominant = state.dominantSide || 'Not specified';
-      const ptDx = document.getElementById('pt_dx').value.trim() || 'Not specified';
+      const outBox = document.getElementById('final-soap-textarea');
+      if (!outBox) return;
+
+      const ptName = document.getElementById('pt_name').value.trim();
+      const ptMrn = document.getElementById('pt_mrn').value.trim();
+      const ptAge = document.getElementById('pt_age').value.trim();
+      const ptDate = document.getElementById('pt_date').value.trim();
+      const ptGender = state.gender;
+      const ptAffected = state.affectedSide;
+      const ptDominant = state.dominantSide;
+      const ptDx = document.getElementById('pt_dx').value.trim();
 
       const famHistDetail = document.getElementById('pt_family_history').value.trim();
       const famParts = [];
       if (state.maritalStatus) famParts.push(state.maritalStatus);
       if (famHistDetail) famParts.push(famHistDetail);
-      const familyText = famParts.length ? famParts.join(' — ') : 'Not specified';
+      const familyText = famParts.join(' — ');
 
       const occDetail = document.getElementById('pt_occupation').value.trim();
       const workParts = [];
       if (state.unemployed) workParts.push('Unemployed');
       if (occDetail) workParts.push(occDetail);
-      const workText = workParts.length ? workParts.join(' — ') : 'Not specified';
+      const workText = workParts.join(' — ');
 
-      // Subjective
-      const sQuote = document.getElementById('s_quote').value.trim() || 'No specific verbal report documented.';
-      const sPain = document.getElementById('s_pain').value.trim() || (state.painScore !== null ? `Pain rated ${state.painScore}/10.` : 'Not reported / not assessed.');
+      // Build Demographics Header (Only include populated fields)
+      const demoLines = [];
+      if (ptName) demoLines.push(`Patient Name   : ${ptName}`);
+      if (ptMrn) demoLines.push(`IC / MRN / ID  : ${ptMrn}`);
+      if (ptAge && ptGender) {
+        demoLines.push(`Age / Gender   : ${ptAge} yrs | ${ptGender}`);
+      } else if (ptAge) {
+        demoLines.push(`Age            : ${ptAge} yrs`);
+      } else if (ptGender) {
+        demoLines.push(`Gender         : ${ptGender}`);
+      }
+      if (ptDate) demoLines.push(`Date           : ${ptDate}`);
+      if (ptAffected && ptDominant) {
+        demoLines.push(`Affected Side  : ${ptAffected} | Dominant Side: ${ptDominant}`);
+      } else if (ptAffected) {
+        demoLines.push(`Affected Side  : ${ptAffected}`);
+      } else if (ptDominant) {
+        demoLines.push(`Dominant Side  : ${ptDominant}`);
+      }
+      if (familyText) demoLines.push(`Family History : ${familyText}`);
+      if (workText) demoLines.push(`Occupation     : ${workText}`);
+      if (ptDx) demoLines.push(`Diagnosis      : ${ptDx}`);
+
+      // S — SUBJECTIVE (Only include documented items)
+      const subjectiveLines = [];
+      const sQuote = document.getElementById('s_quote').value.trim();
+      if (sQuote) subjectiveLines.push(`- Client/Caregiver Report: ${sQuote}`);
+
+      const sPainRaw = document.getElementById('s_pain').value.trim();
+      if (sPainRaw) {
+        subjectiveLines.push(`- Pain / Fatigue Levels: ${sPainRaw}`);
+      } else if (state.painScore !== null) {
+        subjectiveLines.push(`- Pain / Fatigue Levels: Pain rated ${state.painScore}/10.`);
+      }
 
       const mobItems = [];
       if (document.getElementById('mob_indep').checked) mobItems.push('Ambulate independently');
@@ -5243,7 +5287,7 @@
         mobItems.push(aidDetail ? `Using walking aids (${aidDetail})` : 'Using walking aids');
       }
       if (document.getElementById('mob_wheelchair').checked) mobItems.push('Wheelchair');
-      const mobText = mobItems.length ? mobItems.join(', ') : 'Not specified';
+      if (mobItems.length) subjectiveLines.push(`- Mobility Status: ${mobItems.join(', ')}`);
 
       const cameItems = [];
       document.querySelectorAll('.came-cb:checked').forEach(cb => cameItems.push(cb.value));
@@ -5251,30 +5295,37 @@
         const otherTxt = document.getElementById('came_others_text').value.trim();
         cameItems.push(otherTxt ? `Others (${otherTxt})` : 'Others');
       }
-      const cameText = cameItems.length ? cameItems.join(', ') : 'Not specified';
+      if (cameItems.length) subjectiveLines.push(`- Accompanied By: ${cameItems.join(', ')}`);
 
       const homeParts = [];
       if (state.houseType) homeParts.push(`House Type: ${state.houseType}`);
       if (state.wheelchairAccess) homeParts.push(state.wheelchairAccess);
       const homeDetail = document.getElementById('home_env_detail').value.trim();
       if (homeDetail) homeParts.push(homeDetail);
-      const homeEnvText = homeParts.length ? homeParts.join(' | ') : 'Not specified';
+      if (homeParts.length) subjectiveLines.push(`- Home Environment: ${homeParts.join(' | ')}`);
 
-      const sCommands = document.getElementById('s_commands').value.trim() || 'Not documented.';
+      const sCommands = document.getElementById('s_commands').value.trim();
+      if (sCommands) subjectiveLines.push(`- Command Following / Comprehension: ${sCommands}`);
 
       const oriItems = [];
       if (document.getElementById('ori_time').checked) oriItems.push('Time');
       if (document.getElementById('ori_person').checked) oriItems.push('Person');
       if (document.getElementById('ori_place').checked) oriItems.push('Place');
-      const oriText = oriItems.length ? `Oriented to ${oriItems.join(', ')} (${oriItems.length}/3)` : 'Not specified';
+      if (oriItems.length) subjectiveLines.push(`- Orientation: Oriented to ${oriItems.join(', ')} (${oriItems.length}/3)`);
 
-      const sMood = document.getElementById('s_mood').value.trim() || 'Not documented.';
-      const sGoals = document.getElementById('s_goals').value.trim() || 'Not documented.';
+      const sMood = document.getElementById('s_mood').value.trim();
+      if (sMood) subjectiveLines.push(`- Context / Mood / Presentation: ${sMood}`);
 
-      // Objective
-      const oObs = document.getElementById('o_obs').value.trim() || 'No additional clinical observations entered.';
-      const oTests = document.getElementById('o_tests').value.trim() || 'No standardized assessment scores inserted yet.';
-      const oAssist = document.getElementById('o_assist').value.trim() || 'Not documented.';
+      const sGoals = document.getElementById('s_goals').value.trim();
+      if (sGoals) subjectiveLines.push(`- Goals / Priorities: ${sGoals}`);
+
+      // O — OBJECTIVE (Only include documented items)
+      const objectiveLines = [];
+      const oObs = document.getElementById('o_obs').value.trim();
+      if (oObs) objectiveLines.push(`- Clinical Observation:\n  ${oObs}`);
+
+      const oTests = document.getElementById('o_tests').value.trim();
+      if (oTests) objectiveLines.push(`- Standardized Assessments & Component Scores:\n${oTests}`);
 
       const activeHandLines = [];
       handSkillsCatalog.forEach(item => {
@@ -5291,18 +5342,30 @@
           activeHandLines.push(`  * ${cleanTitle}: [${noteTxt}]`);
         }
       });
+      if (activeHandLines.length) {
+        const sideLabel = ptAffected ? ` (${ptAffected} Affected Hand)` : '';
+        objectiveLines.push(`- Hand Manipulation & Motor Building Blocks${sideLabel}:\n${activeHandLines.join('\n')}`);
+      }
 
-      const handBlockText = activeHandLines.length
-        ? `\n- Hand Manipulation & Motor Building Blocks (${ptAffected} Affected Hand):\n${activeHandLines.join('\n')}`
-        : '';
+      const oAssist = document.getElementById('o_assist').value.trim();
+      if (oAssist) objectiveLines.push(`- Assistance & Cueing Level: ${oAssist}`);
 
-      // Assessment
-      const aPhysical = document.getElementById('a_physical').value.trim() || 'Not documented.';
-      const aCognitive = document.getElementById('a_cognitive').value.trim() || 'Not documented.';
-      const aAdl = document.getElementById('a_adl').value.trim() || 'Not documented.';
-      const aSummary = document.getElementById('a_summary').value.trim() || 'Skilled Occupational Therapy indicated to maximize functional independence.';
+      // A — ASSESSMENT (Only include documented items)
+      const assessmentLines = [];
+      const aPhysical = document.getElementById('a_physical').value.trim();
+      if (aPhysical) assessmentLines.push(`- Physical Function: ${aPhysical}`);
 
-      // Plan & Treatment Given
+      const aCognitive = document.getElementById('a_cognitive').value.trim();
+      if (aCognitive) assessmentLines.push(`- Cognitive Function: ${aCognitive}`);
+
+      const aAdl = document.getElementById('a_adl').value.trim();
+      if (aAdl) assessmentLines.push(`- Impact on ADL Performance: ${aAdl}`);
+
+      const aSummary = document.getElementById('a_summary').value.trim();
+      if (aSummary) assessmentLines.push(`- Clinical Synthesis & Skilled OT Justification: ${aSummary}`);
+
+      // P — PLAN & TREATMENT GIVEN (Only include documented items)
+      const planLines = [];
       const activeTreatmentLines = [];
       state.treatments.forEach((tr, idx) => {
         const types = [];
@@ -5312,71 +5375,56 @@
         const mod = (tr.modality || '').trim();
 
         if (types.length > 0 || mod !== '') {
-          const typeStr = types.length > 0 ? `[${types.join(' / ')}] ` : '';
-          const modStr = mod !== '' ? `Modality: ${mod}` : 'Modality: Not specified';
-          activeTreatmentLines.push(`  ${idx + 1}. ${typeStr}${modStr}`);
+          const typeStr = types.length > 0 ? `[${types.join(' / ')}]` : '';
+          const modStr = mod !== '' ? `Modality: ${mod}` : '';
+          const combined = [typeStr, modStr].filter(Boolean).join(' ');
+          activeTreatmentLines.push(`  ${idx + 1}. ${combined}`);
         }
       });
+      if (activeTreatmentLines.length) {
+        planLines.push(`- Treatment Given:\n${activeTreatmentLines.join('\n')}`);
+      }
 
-      const treatmentBlockText = activeTreatmentLines.length
-        ? `- Treatment Given:\n${activeTreatmentLines.join('\n')}\n`
-        : '';
+      const pFreq = document.getElementById('p_freq').value.trim();
+      if (pFreq) planLines.push(`- Frequency & Duration: ${pFreq}`);
 
-      const pFreq = document.getElementById('p_freq').value.trim() || 'Not specified.';
-      const pStg = document.getElementById('p_stg').value.trim() || 'Not specified.';
-      const pLtg = document.getElementById('p_ltg').value.trim() || 'Not specified.';
-      const pHep = document.getElementById('p_hep').value.trim() || 'Not specified.';
+      const pStg = document.getElementById('p_stg').value.trim();
+      if (pStg) planLines.push(`- Short-Term Goals (2–4 wks): ${pStg}`);
 
-      const note =
-`OCCUPATIONAL THERAPY — MEDICAL NEURO SOAP NOTE
-====================================================================
-Patient Name   : ${ptName}
-IC / MRN / ID  : ${ptMrn}
-Age / Gender   : ${ptAge} yrs | ${ptGender}
-Date           : ${ptDate}
-Affected Side  : ${ptAffected} | Dominant Side: ${ptDominant}
-Family History : ${familyText}
-Occupation     : ${workText}
-Diagnosis      : ${ptDx}
-====================================================================
+      const pLtg = document.getElementById('p_ltg').value.trim();
+      if (pLtg) planLines.push(`- Long-Term Goals (6–8 wks): ${pLtg}`);
 
-S — SUBJECTIVE
-- Client/Caregiver Report: ${sQuote}
-- Pain / Fatigue Levels: ${sPain}
-- Mobility Status: ${mobText}
-- Accompanied By: ${cameText}
-- Home Environment: ${homeEnvText}
-- Command Following / Comprehension: ${sCommands}
-- Orientation: ${oriText}
-- Context / Mood / Presentation: ${sMood}
-- Goals / Priorities: ${sGoals}
+      const pHep = document.getElementById('p_hep').value.trim();
+      if (pHep) planLines.push(`- HEP / Next Session Plan: ${pHep}`);
 
-O — OBJECTIVE
-- Clinical Observation:
-  ${oObs}
-- Standardized Assessments & Component Scores:
-${oTests}${handBlockText}
-- Assistance & Cueing Level: ${oAssist}
+      // Assemble ONLY populated blocks without any title banner or divider lines
+      const blocks = [];
+      if (demoLines.length) {
+        blocks.push(demoLines.join('\n'));
+      }
+      if (subjectiveLines.length) {
+        blocks.push(`S — SUBJECTIVE\n${subjectiveLines.join('\n')}`);
+      }
+      if (objectiveLines.length) {
+        blocks.push(`O — OBJECTIVE\n${objectiveLines.join('\n')}`);
+      }
+      if (assessmentLines.length) {
+        blocks.push(`A — ASSESSMENT\n${assessmentLines.join('\n')}`);
+      }
+      if (planLines.length) {
+        blocks.push(`P — PLAN\n${planLines.join('\n')}`);
+      }
 
-A — ASSESSMENT
-- Physical Function: ${aPhysical}
-- Cognitive Function: ${aCognitive}
-- Impact on ADL Performance: ${aAdl}
-- Clinical Synthesis & Skilled OT Justification: ${aSummary}
-
-P — PLAN
-${treatmentBlockText}- Frequency & Duration: ${pFreq}
-- Short-Term Goals (2–4 wks): ${pStg}
-- Long-Term Goals (6–8 wks): ${pLtg}
-- HEP / Next Session Plan: ${pHep}
-====================================================================`;
-
-      document.getElementById('final-soap-textarea').value = note;
+      outBox.value = blocks.join('\n\n');
     }
 
     function copySOAPNote() {
       updateSOAPOutput();
       const textarea = document.getElementById('final-soap-textarea');
+      if (!textarea.value.trim()) {
+        showToast('SOAP Note masih kosong — sila tulis atau tick sesuatu dahulu!', 'bg-p-orange');
+        return;
+      }
       textarea.select();
       textarea.setSelectionRange(0, 99999);
       try {
@@ -5399,6 +5447,10 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
 
     function buildSOAPJsPDF() {
       updateSOAPOutput();
+      const rawText = document.getElementById('final-soap-textarea').value || '';
+      if (!rawText.trim()) {
+        return { empty: true };
+      }
       if (!window.jspdf || !window.jspdf.jsPDF) {
         return null;
       }
@@ -5424,7 +5476,6 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
       doc.text('Medical Neurology Rehabilitation Clinical Documentation', margin + 5, y + 13.5);
       y += 23;
 
-      const rawText = document.getElementById('final-soap-textarea').value || '';
       const lines = rawText.split('\n');
 
       const sectionColors = {
@@ -5443,7 +5494,7 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
 
       lines.forEach((rawLine) => {
         const trimmed = rawLine.trim();
-        if (!trimmed || trimmed.startsWith('====') || trimmed === 'OCCUPATIONAL THERAPY — MEDICAL NEURO SOAP NOTE') {
+        if (!trimmed) {
           return;
         }
 
@@ -5463,7 +5514,7 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
         }
 
         // Demographic Key-Value Line
-        if (/^(Patient Name|IC \/ MRN \/ ID|Age \/ Gender|Date|Affected Side|Family History|Occupation|Diagnosis)\s*:/.test(trimmed)) {
+        if (/^(Patient Name|IC \/ MRN \/ ID|Age \/ Gender|Age|Gender|Date|Affected Side|Dominant Side|Family History|Occupation|Diagnosis)\s*:/.test(trimmed)) {
           ensurePageSpace(6);
           const colonIdx = trimmed.indexOf(':');
           const keyPart = trimmed.slice(0, colonIdx + 1);
@@ -5522,6 +5573,10 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
     function extractSOAPAsPDF() {
       try {
         const built = buildSOAPJsPDF();
+        if (built && built.empty) {
+          showToast('SOAP Note masih kosong — sila isi atau tick sesuatu dahulu!', 'bg-p-orange');
+          return;
+        }
         if (!built) {
           showToast('PDF generator still loading, please try again in 1 second', 'bg-p-orange');
           return;
@@ -5535,6 +5590,11 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
 
     function openGoogleDriveModal() {
       updateSOAPOutput();
+      const rawText = document.getElementById('final-soap-textarea').value || '';
+      if (!rawText.trim()) {
+        showToast('SOAP Note masih kosong — sila isi atau tick sesuatu dahulu!', 'bg-p-orange');
+        return;
+      }
       const filename = getSOAPExportFilename('pdf');
       const prevEl = document.getElementById('gdrive-filename-preview');
       if (prevEl) prevEl.innerText = filename;
@@ -5555,8 +5615,8 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
     async function sharePDFToGoogleDrive() {
       try {
         const built = buildSOAPJsPDF();
-        if (!built) {
-          showToast('PDF engine loading, please try again', 'bg-p-orange');
+        if (!built || built.empty) {
+          showToast('Please enter clinical details first', 'bg-p-orange');
           return;
         }
         const pdfFile = new File([built.pdfBlob], built.filename, { type: 'application/pdf' });
@@ -5569,7 +5629,6 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
           closeGoogleDriveModal();
           showToast('Shared SOAP PDF to Google Drive!', 'bg-p-teal');
         } else {
-          // Desktop fallback: download PDF and open Google Drive tab
           downloadAndOpenGoogleDrive();
         }
       } catch (err) {
@@ -5582,7 +5641,7 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
     function downloadAndOpenGoogleDrive() {
       try {
         const built = buildSOAPJsPDF();
-        if (built) {
+        if (built && !built.empty) {
           built.doc.save(built.filename);
         }
         window.open('https://drive.google.com/drive/my-drive', '_blank', 'noopener');
@@ -5596,6 +5655,10 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
     function downloadSOAPAsDoc() {
       updateSOAPOutput();
       const rawText = document.getElementById('final-soap-textarea').value || '';
+      if (!rawText.trim()) {
+        showToast('SOAP Note masih kosong — sila isi atau tick sesuatu dahulu!', 'bg-p-orange');
+        return;
+      }
       const escaped = rawText
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -5647,6 +5710,7 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
               try {
                 statusBox.innerHTML = `${cuteSvg('hourglass', 'w-4 h-4')} Uploading PDF directly to your Google Drive...`;
                 const built = buildSOAPJsPDF();
+                if (!built || built.empty) return;
                 const metadata = {
                   name: built.filename,
                   mimeType: 'application/pdf'
@@ -5690,11 +5754,10 @@ ${treatmentBlockText}- Frequency & Duration: ${pFreq}
     }
 
     // =========================================================
-    // INITIALIZE APP ON LOAD
+    // INITIALIZE APP ON LOAD (100% BLANK SOAP OUTPUT BY DEFAULT)
     // =========================================================
     function initApp() {
-      const todayStr = new Date().toISOString().split('T')[0];
-      document.getElementById('pt_date').value = todayStr;
+      document.getElementById('pt_date').value = '';
       updateChoiceButtons();
       renderHandSkills();
       renderTreatments();
