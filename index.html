@@ -619,481 +619,360 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-5">
 
     <!-- ========================================================= -->
-    <!-- TAB 1: SOAP NOTE BUILDER                                  -->
+    <!-- TAB 1: MAIN SOAP NOTE FORM (DEMOGRAPHICS, S, O, A, P)     -->
     <!-- ========================================================= -->
     <section id="tab-soap" class="tab-pane space-y-6">
 
-      <!-- Patient Demographics Card -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-t-8 border-p-blue">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <h2 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-p-blue inline-block"></span>
-            Patient Clinical Profile
-          </h2>
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" onclick="openOCRModal()" class="px-3.5 py-1.5 rounded-xl bg-p-pink text-white font-extrabold text-xs shadow-sm hover:opacity-95 transition flex items-center gap-1.5">
-              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="6" width="20" height="14" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
-                <circle cx="12" cy="13" r="3.5" fill="#07bdff" stroke="#0f172a" stroke-width="1.8"/>
-                <circle cx="17.5" cy="9.5" r="1.2" fill="#f5e45f"/>
-              </svg>
-              <span>Scan ID / Sticker</span>
-            </button>
-            <button type="button" onclick="savePatientRecordToCloud(false)" class="px-3.5 py-1.5 rounded-xl bg-p-lime text-slate-900 font-extrabold text-xs shadow-sm hover:brightness-105 transition inline-flex items-center gap-1.5">
-              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                <path d="M5 3h11l3 3v13a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" fill="#07bdff" stroke="#0f172a" stroke-width="2"/>
-                <rect x="7" y="13" width="10" height="8" rx="1.5" fill="#f5e45f" stroke="#0f172a" stroke-width="1.6"/>
-              </svg>
-              <span>Save Patient Data</span>
-            </button>
+      <!-- 1. PATIENT CLINICAL PROFILE -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border-t-8 border-p-blue">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200">
+          <div class="flex items-center gap-2.5">
+            <span class="w-3.5 h-3.5 rounded-full bg-p-blue inline-block"></span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Patient Clinical Profile</h2>
           </div>
+          <button type="button" onclick="openOCRModal()" class="px-4 py-2 rounded-2xl bg-p-pink text-white font-extrabold text-xs sm:text-sm shadow-md hover:opacity-95 transition flex items-center gap-2">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="6" width="20" height="14" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+              <circle cx="12" cy="13" r="3.5" fill="#07bdff" stroke="#0f172a" stroke-width="1.8"/>
+              <circle cx="17.5" cy="9.5" r="1.2" fill="#f5e45f"/>
+            </svg>
+            <span>Scan ID / Sticker</span>
+          </button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Patient Name</label>
-            <input type="text" id="pt_name" value="" oninput="updateSOAPOutput()" placeholder="e.g. Patient Full Name" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <div class="md:col-span-5">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Patient Full Name</label>
+            <input type="text" id="pt_name" oninput="updateSOAPOutput()" placeholder="e.g. Ahmad bin Ismail" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
           </div>
 
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">IC No. / MRN / RN</label>
-            <input type="text" id="pt_mrn" value="" oninput="updateSOAPOutput()" placeholder="e.g. 650412-10-5432 / MRN" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
+          <div class="md:col-span-4">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">NRIC / MRN / RN No.</label>
+            <input type="text" id="pt_mrn" oninput="updateSOAPOutput()" placeholder="e.g. 820412-10-5431 / MRN-001" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
           </div>
 
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Age (Years)</label>
-            <input type="text" id="pt_age" value="" oninput="updateSOAPOutput()" placeholder="e.g. 62" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
+          <div class="md:col-span-3">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Age (Years)</label>
+            <input type="text" id="pt_age" oninput="updateSOAPOutput()" placeholder="e.g. 58" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
           </div>
 
-          <div class="min-w-0">
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Date of Session</label>
-            <input type="date" id="pt_date" value="" onchange="updateSOAPOutput()" class="w-full max-w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm bg-white" />
+          <div class="md:col-span-4 min-w-0">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Session Date</label>
+            <input type="date" id="pt_date" onchange="updateSOAPOutput()" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm bg-white" />
           </div>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-          <!-- Gender Tick -->
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="block text-xs font-bold text-slate-700 uppercase mb-2">Gender</span>
-            <div class="flex gap-2">
-              <button type="button" id="gender_male" onclick="toggleSingleChoice('gender', 'Male')" class="flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Male</button>
-              <button type="button" id="gender_female" onclick="toggleSingleChoice('gender', 'Female')" class="flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Female</button>
+          <div class="md:col-span-4">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Gender</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" id="btn-gender-male" onclick="setGender('Male')" class="py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition">Male</button>
+              <button type="button" id="btn-gender-female" onclick="setGender('Female')" class="py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition">Female</button>
             </div>
           </div>
 
-          <!-- Affected Side Tick -->
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="block text-xs font-bold text-slate-700 uppercase mb-2">Affected Side</span>
-            <div class="flex gap-2">
-              <button type="button" id="affected_right" onclick="setAffectedSide('Right')" class="flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Right</button>
-              <button type="button" id="affected_left" onclick="setAffectedSide('Left')" class="flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Left</button>
+          <div class="md:col-span-4">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Affected Side (Hemiparesis / Deficit)</label>
+            <div class="grid grid-cols-3 gap-1.5">
+              <button type="button" id="btn-aff-right" onclick="setAffectedSide('Right')" class="py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs transition">Right</button>
+              <button type="button" id="btn-aff-left" onclick="setAffectedSide('Left')" class="py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs transition">Left</button>
+              <button type="button" id="btn-aff-bilat" onclick="setAffectedSide('Bilateral')" class="py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs transition">Bilateral</button>
             </div>
           </div>
 
-          <!-- Dominant Side Tick -->
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="block text-xs font-bold text-slate-700 uppercase mb-2">Dominant Side</span>
-            <div class="flex gap-2">
-              <button type="button" id="dominant_right" onclick="toggleSingleChoice('dominant', 'Right')" class="flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Right</button>
-              <button type="button" id="dominant_left" onclick="toggleSingleChoice('dominant', 'Left')" class="flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Left</button>
+          <div class="md:col-span-4">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Dominant Hand</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" id="btn-dom-right" onclick="setDominantSide('Right')" class="py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition">Right-Handed</button>
+              <button type="button" id="btn-dom-left" onclick="setDominantSide('Left')" class="py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition">Left-Handed</button>
             </div>
           </div>
-        </div>
 
-        <!-- Family History (Single / Married / Widowed + Column) & Work History / Occupation (Unemployed + Column) -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-          <div class="bg-sky-50/50 p-3.5 rounded-xl border border-sky-200 space-y-2.5">
+          <div class="md:col-span-8">
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Medical / Neurological Diagnosis</label>
+            <input type="text" id="pt_dx" oninput="updateSOAPOutput()" placeholder="e.g. Left MCA Infarct with Right Hemiparesis / TBI / Parkinson's Disease" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
+          </div>
+
+          <!-- Family History & Marital Status -->
+          <div class="md:col-span-6 p-3.5 rounded-2xl bg-sky-50/50 border border-sky-200 space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <span class="text-xs font-extrabold text-slate-800 uppercase">Family History &amp; Marital Status</span>
+              <label class="text-xs font-extrabold text-slate-700 uppercase">Family History &amp; Marital Status</label>
               <div class="flex gap-1.5">
-                <button type="button" id="marital_single" onclick="toggleSingleChoice('marital', 'Single')" class="px-3 py-1.5 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Single</button>
-                <button type="button" id="marital_married" onclick="toggleSingleChoice('marital', 'Married')" class="px-3 py-1.5 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Married</button>
-                <button type="button" id="marital_widowed" onclick="toggleSingleChoice('marital', 'Widowed')" class="px-3 py-1.5 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Widowed</button>
+                <button type="button" id="btn-marital-single" onclick="setMaritalStatus('Single')" class="px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-slate-700 font-bold text-xs transition">Single</button>
+                <button type="button" id="btn-marital-married" onclick="setMaritalStatus('Married')" class="px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-slate-700 font-bold text-xs transition">Married</button>
+                <button type="button" id="btn-marital-widowed" onclick="setMaritalStatus('Widowed')" class="px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-slate-700 font-bold text-xs transition">Widowed</button>
               </div>
             </div>
-            <input type="text" id="pt_family_history" value="" oninput="updateSOAPOutput()" placeholder="Type family history / living with / caregiver details..." class="w-full px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-blue focus:outline-none text-sm" />
+            <input type="text" id="pt_family_history" oninput="updateSOAPOutput()" placeholder="e.g. Lives with spouse & 2 children; primary caregiver is wife..." class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white focus:border-p-blue focus:outline-none text-xs sm:text-sm" />
           </div>
 
-          <div class="bg-sky-50/50 p-3.5 rounded-xl border border-sky-200 space-y-2.5">
+          <!-- Work History / Occupation -->
+          <div class="md:col-span-6 p-3.5 rounded-2xl bg-sky-50/50 border border-sky-200 space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <span class="text-xs font-extrabold text-slate-800 uppercase">Work History / Occupation</span>
-              <button type="button" id="work_unemployed_btn" onclick="toggleUnemployedStatus()" class="px-3.5 py-1.5 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition">Unemployed</button>
+              <label class="text-xs font-extrabold text-slate-700 uppercase">Work History / Occupation</label>
+              <button type="button" id="btn-unemployed" onclick="toggleUnemployed()" class="px-3 py-1 rounded-lg border border-slate-300 bg-white text-slate-700 font-bold text-xs transition">Unemployed</button>
             </div>
-            <input type="text" id="pt_occupation" value="" oninput="updateSOAPOutput()" placeholder="Type occupation / previous work history..." class="w-full px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-blue focus:outline-none text-sm" />
+            <input type="text" id="pt_occupation" oninput="updateSOAPOutput()" placeholder="e.g. Retired teacher / Clerk / Factory technician..." class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white focus:border-p-blue focus:outline-none text-xs sm:text-sm" />
           </div>
-        </div>
-
-        <div class="mt-4">
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Primary Neurological Diagnosis</label>
-          <input type="text" id="pt_dx" value="" oninput="updateSOAPOutput()" placeholder="e.g. Left MCA Ischemic Stroke with Right Hemiparesis / Traumatic Brain Injury / Parkinson's Disease" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-blue focus:outline-none text-sm" />
         </div>
       </div>
 
-      <!-- ========================================================= -->
-      <!-- S — SUBJECTIVE                                            -->
-      <!-- ========================================================= -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-t-8 border-p-pink">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-xl bg-p-pink text-white flex items-center justify-center font-black">S</span>
-            <span>Subjective</span>
-          </h2>
-          <span class="text-xs font-bold px-3 py-1 rounded-full bg-pink-50 text-p-pink">Patient &amp; Caregiver Report</span>
+      <!-- 2. S — SUBJECTIVE -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border-t-8 border-p-pink space-y-4">
+        <div class="flex items-center gap-2.5 pb-2 border-b border-slate-200">
+          <span class="px-3 py-1 rounded-xl bg-p-pink text-white font-black text-sm">S</span>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Subjective</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Client / Caregiver Chief Complaint &amp; Verbal Quote</label>
-            <textarea id="s_quote" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Patient states 'My right hand feels heavy and I struggle to button my shirt or hold a spoon.'" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-sm"></textarea>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Client / Caregiver Chief Complaint &amp; Report</label>
+            <textarea id="s_quote" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Patient reports weakness in right hand and difficulty buttoning shirt..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-sm"></textarea>
           </div>
-
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Pain / Fatigue / Sleep / Energy Levels</label>
-            <textarea id="s_pain" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Denies shoulder pain at rest (0/10), reports 3/10 ache after prolonged overhead reach; mild afternoon fatigue." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-sm"></textarea>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Pain / Fatigue Levels</label>
+            <textarea id="s_pain" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Right shoulder pain 3/10 during overhead reach; fatigues after 20 mins..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-sm"></textarea>
           </div>
         </div>
 
-        <!-- Mobility Status Checklist -->
-        <div class="mt-4 p-4 rounded-xl bg-pink-50/40 border border-pink-200">
-          <label class="block text-xs font-bold text-slate-800 uppercase mb-2.5">Mobility Status (Tick applicable)</label>
-          <div class="flex flex-wrap items-center gap-3">
-            <label class="check-pill flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" id="mob_indep" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
-              <span>Ambulate independently</span>
-            </label>
-
-            <label class="check-pill flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" id="mob_aids" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
-              <span>Using walking aids</span>
-            </label>
-
-            <input type="text" id="mob_aids_detail" oninput="updateSOAPOutput()" placeholder="Specify walking aid (e.g., quadripod, walking frame, single cane)..." class="flex-1 min-w-[200px] px-3 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-pink focus:outline-none text-sm" />
-
-            <label class="check-pill flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" id="mob_wheelchair" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
-              <span>Wheelchair</span>
-            </label>
+        <!-- Mobility Status & Accompanied By -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3.5 rounded-2xl bg-pink-50/40 border border-pink-200 space-y-2">
+            <div class="text-xs font-extrabold text-slate-700 uppercase">Mobility Status</div>
+            <div class="flex flex-wrap gap-2">
+              <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" id="mob_indep" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
+                <span>Ambulate independently</span>
+              </label>
+              <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" id="mob_aids" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
+                <span>Walking aids</span>
+              </label>
+              <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" id="mob_wheelchair" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
+                <span>Wheelchair</span>
+              </label>
+            </div>
+            <input type="text" id="mob_aids_detail" oninput="updateSOAPOutput()" placeholder="Specify walking aid (e.g. Quadripod, Walking frame)..." class="w-full px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs" />
           </div>
-        </div>
 
-        <!-- Accompanied By Checklist -->
-        <div class="mt-4 p-4 rounded-xl bg-pink-50/40 border border-pink-200">
-          <label class="block text-xs font-bold text-slate-800 uppercase mb-2.5">Accompanied By / Came With (Tick applicable)</label>
-          <div class="flex flex-wrap items-center gap-2.5">
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" class="came-cb w-4 h-4 accent-pink-500 rounded" value="Alone" onchange="updateSOAPOutput()" />
-              <span>Alone</span>
-            </label>
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" class="came-cb w-4 h-4 accent-pink-500 rounded" value="Husband" onchange="updateSOAPOutput()" />
-              <span>Husband</span>
-            </label>
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" class="came-cb w-4 h-4 accent-pink-500 rounded" value="Wife" onchange="updateSOAPOutput()" />
-              <span>Wife</span>
-            </label>
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" class="came-cb w-4 h-4 accent-pink-500 rounded" value="Son" onchange="updateSOAPOutput()" />
-              <span>Son</span>
-            </label>
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" class="came-cb w-4 h-4 accent-pink-500 rounded" value="Daughter" onchange="updateSOAPOutput()" />
-              <span>Daughter</span>
-            </label>
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" class="came-cb w-4 h-4 accent-pink-500 rounded" value="Mother" onchange="updateSOAPOutput()" />
-              <span>Mother</span>
-            </label>
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" class="came-cb w-4 h-4 accent-pink-500 rounded" value="Father" onchange="updateSOAPOutput()" />
-              <span>Father</span>
-            </label>
-            <label class="check-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
-              <input type="checkbox" id="came_others_cb" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
-              <span>Others</span>
-            </label>
-            <input type="text" id="came_others_text" oninput="updateSOAPOutput()" placeholder="Specify others (e.g., maid, sibling, friend)..." class="flex-1 min-w-[200px] px-3 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-pink focus:outline-none text-sm" />
+          <div class="p-3.5 rounded-2xl bg-pink-50/40 border border-pink-200 space-y-2">
+            <div class="text-xs font-extrabold text-slate-700 uppercase">Accompanied By</div>
+            <div class="flex flex-wrap gap-2">
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" value="Alone" onchange="updateSOAPOutput()" class="came-cb w-4 h-4 accent-pink-500 rounded" />
+                <span>Alone</span>
+              </label>
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" value="Spouse" onchange="updateSOAPOutput()" class="came-cb w-4 h-4 accent-pink-500 rounded" />
+                <span>Spouse</span>
+              </label>
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" value="Children" onchange="updateSOAPOutput()" class="came-cb w-4 h-4 accent-pink-500 rounded" />
+                <span>Children</span>
+              </label>
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" value="Parents" onchange="updateSOAPOutput()" class="came-cb w-4 h-4 accent-pink-500 rounded" />
+                <span>Parents</span>
+              </label>
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
+                <input type="checkbox" id="came_others_cb" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
+                <span>Others</span>
+              </label>
+            </div>
+            <input type="text" id="came_others_text" oninput="updateSOAPOutput()" placeholder="Specify if others (e.g. Sibling, Helper, Ward attendant)..." class="w-full px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs" />
           </div>
         </div>
 
         <!-- Home Environment: House Type & Wheelchair Accessibility -->
-        <div class="mt-4 p-4 rounded-xl bg-pink-50/40 border border-pink-200">
-          <label class="block text-xs font-bold text-slate-800 uppercase mb-2.5">Home Environment — House Type &amp; Wheelchair Accessibility</label>
-          <div class="flex flex-wrap items-center gap-3">
-            <div class="flex items-center gap-2">
-              <button type="button" id="house_landed" onclick="toggleSingleChoice('houseType', 'Landed')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5">
-                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                  <path d="M3 11l9-7 9 7v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8z" fill="#a6e23d" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
-                  <rect x="9.5" y="14" width="5" height="7" rx="1" fill="#f5e45f" stroke="#0f172a" stroke-width="1.6"/>
-                </svg>
-                <span>Landed</span>
-              </button>
-              <button type="button" id="house_highrise" onclick="toggleSingleChoice('houseType', 'High Rise')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5">
-                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                  <rect x="5" y="3" width="14" height="18" rx="2" fill="#a890ff" stroke="#0f172a" stroke-width="2"/>
-                  <rect x="8" y="6" width="2.5" height="2.5" fill="#f5e45f"/>
-                  <rect x="13.5" y="6" width="2.5" height="2.5" fill="#f5e45f"/>
-                  <rect x="8" y="11" width="2.5" height="2.5" fill="#f5e45f"/>
-                  <rect x="13.5" y="11" width="2.5" height="2.5" fill="#f5e45f"/>
-                  <rect x="10" y="16" width="4" height="5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
-                </svg>
-                <span>High Rise</span>
-              </button>
-            </div>
-            <span class="text-slate-300 font-bold hidden sm:inline">|</span>
-            <div class="flex flex-wrap items-center gap-2">
-              <button type="button" id="wc_accessible" onclick="toggleSingleChoice('wheelchairAccess', 'Wheelchair Accessible')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5">
-                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                  <circle cx="11" cy="5.5" r="2" fill="#07bdff" stroke="#0f172a" stroke-width="1.8"/>
-                  <path d="M11 9v5.5h5.5l2 4.5" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M8.5 13.5a4.5 4.5 0 105.8 5.8" stroke="#00c69e" stroke-width="2.4" stroke-linecap="round"/>
-                </svg>
-                <span>Wheelchair Accessible</span>
-              </button>
-              <button type="button" id="wc_non_accessible" onclick="toggleSingleChoice('wheelchairAccess', 'Wheelchair Non-Accessible')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5">
-                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="9.5" fill="#ff68bd" stroke="#0f172a" stroke-width="2"/>
-                  <path d="M6.5 6.5l11 11" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/>
-                </svg>
-                <span>Wheelchair Non-Accessible</span>
-              </button>
-            </div>
-            <input type="text" id="home_env_detail" oninput="updateSOAPOutput()" placeholder="Optional home details (e.g., 2 steps at entrance, lift available, narrow bathroom door)..." class="flex-1 min-w-[220px] px-3 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-pink focus:outline-none text-sm" />
+        <div class="p-3.5 rounded-2xl bg-pink-50/40 border border-pink-200 space-y-2.5">
+          <div class="text-xs font-extrabold text-slate-700 uppercase">Home Environment &amp; Accessibility</div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" id="btn-house-landed" onclick="setHouseType('Landed')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8z" fill="#f5e45f" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/></svg>
+              <span>Landed</span>
+            </button>
+            <button type="button" id="btn-house-highrise" onclick="setHouseType('High Rise')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" fill="#07bdff" stroke="#0f172a" stroke-width="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>High Rise</span>
+            </button>
+            <span class="text-slate-300 hidden sm:inline">|</span>
+            <button type="button" id="btn-wc-accessible" onclick="setWheelchairAccess('Wheelchair Accessible')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="17" r="4" fill="#a6e23d" stroke="#0f172a" stroke-width="2"/><path d="M10 6v7h6l2 4" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Wheelchair Accessible</span>
+            </button>
+            <button type="button" id="btn-wc-nonaccessible" onclick="setWheelchairAccess('Wheelchair Non-Accessible')" class="px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#ff68bd" stroke="#0f172a" stroke-width="2"/><path d="M8 8l8 8" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/></svg>
+              <span>Wheelchair Non-Accessible</span>
+            </button>
           </div>
+          <input type="text" id="home_env_detail" oninput="updateSOAPOutput()" placeholder="Additional home setup details (e.g. 2 steps at entrance, bathroom grab bars installed, lift available)..." class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm" />
         </div>
 
-        <!-- Understanding Commands & Orientation -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Understanding Commands / Comprehension</label>
-            <input type="text" id="s_commands" oninput="updateSOAPOutput()" placeholder="e.g. Able to understand 1-step & 2-step verbal/visual commands..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-sm" />
-          </div>
-
-          <div class="bg-pink-50/40 p-3 rounded-xl border border-pink-200">
-            <span class="block text-xs font-bold text-slate-800 uppercase mb-2">Oriented To (Tick applicable)</span>
-            <div class="flex flex-wrap gap-3">
-              <label class="check-pill flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
+        <!-- Orientation, Commands, Mood, Goals -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3.5 rounded-2xl bg-pink-50/40 border border-pink-200 space-y-2">
+            <div class="text-xs font-extrabold text-slate-700 uppercase">Orientation (TPP)</div>
+            <div class="flex flex-wrap gap-2">
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
                 <input type="checkbox" id="ori_time" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
                 <span>Time</span>
               </label>
-              <label class="check-pill flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
                 <input type="checkbox" id="ori_person" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
                 <span>Person</span>
               </label>
-              <label class="check-pill flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white border-2 border-slate-200 text-xs sm:text-sm font-semibold">
+              <label class="check-pill flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold">
                 <input type="checkbox" id="ori_place" onchange="updateSOAPOutput()" class="w-4 h-4 accent-pink-500 rounded" />
                 <span>Place</span>
               </label>
             </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Context / Mood / Presentation</label>
-            <input type="text" id="s_mood" oninput="updateSOAPOutput()" placeholder="e.g. Alert, cooperative, motivated for upper limb & ADL retraining" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-sm" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Patient &amp; Caregiver Goals</label>
-            <input type="text" id="s_goals" oninput="updateSOAPOutput()" placeholder="e.g. Independent feeding with spoon, self-dressing upper garment, safe toilet transfer" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-sm" />
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================================= -->
-      <!-- O — OBJECTIVE (INCLUDING EMBEDDED HAND MANIPULATION)      -->
-      <!-- ========================================================= -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-t-8 border-p-teal">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-xl bg-p-teal text-white flex items-center justify-center font-black">O</span>
-            <span>Objective</span>
-          </h2>
-          <button type="button" onclick="syncAllAssessments()" class="px-3.5 py-1.5 rounded-xl bg-p-teal text-white font-bold text-xs shadow-sm hover:opacity-95 transition inline-flex items-center gap-1.5">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-              <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="#f5e45f" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-            <span>Sync All Scored Assessments</span>
-          </button>
-        </div>
-
-        <div class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Clinical Observation (Posture, Sitting Balance, Transfers, Visual-Perceptual, ROM)</label>
-            <textarea id="o_obs" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Static sitting balance: Good; Dynamic sitting balance: Fair. Right shoulder subluxation ~1 fingerbreadth. Active ROM right shoulder flexion 0-95°, elbow flexion 0-110°, wrist extension 0-15° with mild flexor synergy." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-teal focus:outline-none text-sm"></textarea>
+            <input type="text" id="s_commands" oninput="updateSOAPOutput()" placeholder="Command following (e.g. Able to follow 2-step verbal/visual commands)..." class="w-full px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs" />
           </div>
 
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Standardized Assessment Scores &amp; Component Results (Auto-Populated from Scored Tabs)</label>
-            <textarea id="o_tests" rows="4" oninput="updateSOAPOutput()" placeholder="Tick any assessment tab above (Pain Scale, MBI, Lawton IADL, Interest Checklist, DASS-21, MMSE, Fugl-Meyer, MoCA, Muscle Power, Muscle Tone) and click Insert Result to Note — only scored items will appear here..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-teal focus:outline-none text-sm bg-teal-50/30"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Level of Assistance &amp; Cues Required During Task Performance</label>
-            <input type="text" id="o_assist" oninput="updateSOAPOutput()" placeholder="e.g. Minimal physical assistance (25%) for donning shirt over affected limb; intermittent verbal cueing for scanning left side." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-teal focus:outline-none text-sm" />
-          </div>
-
-          <!-- EMBEDDED IN-HAND MANIPULATION & MOTOR BUILDING BLOCKS (ALL UNTICKED BY DEFAULT) -->
-          <div class="mt-5 pt-5 border-t-2 border-dashed border-teal-200">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <div>
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                  <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
-                    <path d="M8 12V5.5a1.5 1.5 0 013 0V11m0-5.5a1.5 1.5 0 013 0V11m0-4.5a1.5 1.5 0 013 0V13c0 4.5-3 7.5-7 7.5S4 18 4 14v-3.5a1.5 1.5 0 013 0V13" fill="#f5e45f" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>Hand Manipulation Skills &amp; Neuromuscular Building Blocks</span>
-                  <span id="hms-side-badge" class="px-2.5 py-0.5 rounded-full bg-p-teal text-white text-xs font-bold">Affected Hand</span>
-                </h3>
-                <p class="text-xs text-slate-500">All options start unticked by default. Only ticked skills or typed clinical observations will be included in the SOAP note.</p>
-              </div>
-              <button type="button" onclick="clearHandSkills()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
-                Clear Hand Skills
-              </button>
-            </div>
-
-            <!-- Part 1: In-Hand Manipulation Skills -->
-            <div class="p-4 rounded-2xl bg-teal-50/40 border border-teal-200 mb-4">
-              <div class="text-xs font-extrabold text-p-teal uppercase tracking-wide mb-3">Part 1 — In-Hand Manipulation Skills (Tick to include)</div>
-              <div id="hms-skills-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-            </div>
-
-            <!-- Part 2: Key Neuromuscular Building Blocks -->
-            <div class="p-4 rounded-2xl bg-sky-50/40 border border-sky-200">
-              <div class="text-xs font-extrabold text-p-blue uppercase tracking-wide mb-3">Part 2 — Key Neuromuscular Building Blocks (Tick to include)</div>
-              <div id="hms-blocks-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================================= -->
-      <!-- A — ASSESSMENT (PHYSICAL, COGNITIVE, ADL IMPACT)          -->
-      <!-- ========================================================= -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-t-8 border-p-orange">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-xl bg-p-orange text-white flex items-center justify-center font-black">A</span>
-            <span>Assessment</span>
-          </h2>
-          <span class="text-xs font-bold px-3 py-1 rounded-full bg-orange-50 text-p-orange">Physical • Cognitive • ADL Impact</span>
-        </div>
-
-        <div class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="p-3.5 rounded-2xl bg-orange-50/40 border border-orange-200">
-              <label class="block text-xs font-extrabold text-p-orange uppercase mb-1.5">1. Physical Function Assessment</label>
-              <textarea id="a_physical" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Impaired right upper limb motor recovery (FMA-UE), proximal shoulder weakness (MRC 3/5), mild elbow flexor spasticity (MAS 1+), and reduced fine pinch/in-hand manipulation." class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-orange focus:outline-none text-sm"></textarea>
-            </div>
-
-            <div class="p-3.5 rounded-2xl bg-orange-50/40 border border-orange-200">
-              <label class="block text-xs font-extrabold text-p-orange uppercase mb-1.5">2. Cognitive Function Assessment</label>
-              <textarea id="a_cognitive" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Alert and oriented x3; mild executive dysfunction, reduced sustained attention, and delayed verbal recall noted on MoCA, requiring structured 1-to-2 step cueing." class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-orange focus:outline-none text-sm"></textarea>
-            </div>
-
-            <div class="p-3.5 rounded-2xl bg-orange-50/40 border border-orange-200">
-              <label class="block text-xs font-extrabold text-p-orange uppercase mb-1.5">3. Impact on ADL Performance</label>
-              <textarea id="a_adl" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Above physical & cognitive deficits limit bilateral upper body dressing, buttoning, utensil manipulation during feeding, and safe independent toilet transfers (MBI moderate dependence)." class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 bg-white focus:border-p-orange focus:outline-none text-sm"></textarea>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">4. Clinical Synthesis &amp; Skilled OT Justification</label>
-            <textarea id="a_summary" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Patient demonstrates good rehabilitation potential and strong motivation. Skilled OT is medically necessary for task-specific neuro-rehabilitation, fine motor coordination, cognitive strategy training, and caregiver education." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-orange focus:outline-none text-sm"></textarea>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================================= -->
-      <!-- P — PLAN (INCLUDING TREATMENT GIVEN 1–5+)                 -->
-      <!-- ========================================================= -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-t-8 border-p-purple">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-xl bg-p-purple text-white flex items-center justify-center font-black">P</span>
-            <span>Plan</span>
-          </h2>
-          <span class="text-xs font-bold px-3 py-1 rounded-full bg-purple-50 text-p-purple">Treatment Given &amp; Rehab Goals</span>
-        </div>
-
-        <!-- TREATMENT GIVEN (1–5 + DYNAMIC ADD) -->
-        <div id="treatment-given-box" class="p-4 sm:p-5 rounded-2xl bg-purple-50/50 border-2 border-purple-200 mb-5">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div class="space-y-2.5">
             <div>
-              <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="9" width="18" height="10" rx="5" transform="rotate(-35 12 14)" fill="#ff68bd" stroke="#0f172a" stroke-width="2"/>
-                  <path d="M9.5 10.5l5 5" stroke="#0f172a" stroke-width="2"/>
-                </svg>
-                <span>Treatment Given (1 – 5+)</span>
-              </h3>
-              <p class="text-xs text-slate-600">Tick classification (Preparatory method, Purposeful method, Functional activity) and specify the Treatment Modality below.</p>
+              <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Context / Mood / Presentation</label>
+              <input type="text" id="s_mood" oninput="updateSOAPOutput()" placeholder="e.g. Alert, cooperative, motivated during session..." class="w-full px-3.5 py-2 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Patient / Caregiver Goals &amp; Priorities</label>
+              <input type="text" id="s_goals" oninput="updateSOAPOutput()" placeholder="e.g. Wants to feed self independently with spoon & dress upper body..." class="w-full px-3.5 py-2 rounded-xl border-2 border-slate-200 focus:border-p-pink focus:outline-none text-xs sm:text-sm" />
             </div>
           </div>
-
-          <div id="treatments-list-container" class="space-y-3"></div>
-
-          <div class="mt-3 pt-2">
-            <button type="button" onclick="addTreatmentRow()" class="px-4 py-2.5 rounded-xl bg-p-purple text-white font-extrabold text-xs sm:text-sm shadow-sm hover:opacity-95 transition flex items-center gap-1.5">
-              <span>+ Add Treatment (More than 5)</span>
-            </button>
-          </div>
         </div>
+      </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Frequency &amp; Duration</label>
-            <input type="text" id="p_freq" oninput="updateSOAPOutput()" placeholder="e.g. 2x/week for 45–60 minutes x 6 weeks" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm" />
+      <!-- 3. O — OBJECTIVE -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border-t-8 border-p-teal space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-200">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-xl bg-p-teal text-white font-black text-sm">O</span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Objective</h2>
           </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Short-Term Goals (2–4 Weeks)</label>
-            <input type="text" id="p_stg" oninput="updateSOAPOutput()" placeholder="e.g. Patient will perform upper body dressing with min assist using hemi-dressing technique." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm" />
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Long-Term Goals (6–8 Weeks)</label>
-            <input type="text" id="p_ltg" oninput="updateSOAPOutput()" placeholder="e.g. Patient will achieve modified independence in self-feeding, grooming, and dressing." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm" />
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Home Exercise Program (HEP) / Next Session Plan</label>
-            <input type="text" id="p_hep" oninput="updateSOAPOutput()" placeholder="e.g. Daily scapular mobilization, weight-bearing, peg/coin manipulation HEP; caregiver training." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm" />
-          </div>
-        </div>
-
-        <div class="mt-6 pt-4 border-t border-slate-200 flex flex-wrap justify-between items-center gap-3">
-          <button type="button" onclick="savePatientRecordToCloud(false)" class="px-5 py-3 rounded-xl bg-p-lime text-slate-900 font-extrabold text-sm shadow-md hover:brightness-105 transition flex items-center gap-2">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-              <path d="M5 3h11l3 3v13a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" fill="#07bdff" stroke="#0f172a" stroke-width="2"/>
-              <rect x="7" y="13" width="10" height="8" rx="1.5" fill="#f5e45f" stroke="#0f172a" stroke-width="1.6"/>
-            </svg>
-            <span>Save Record to Cloud</span>
+          <button type="button" onclick="syncAllAssessments()" class="px-3.5 py-2 rounded-xl bg-p-yellow text-slate-900 font-extrabold text-xs shadow-sm hover:brightness-105 transition">
+            ⚡ Pull All Scored Assessments Here
           </button>
-          <button type="button" onclick="switchTab('tab-output')" class="px-6 py-3 rounded-xl bg-p-teal text-white font-extrabold text-sm shadow-md hover:opacity-95 transition flex items-center gap-2">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
-              <path d="M6 3h8l4 4v12a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
-              <path d="M8 11h8M8 15h6" stroke="#00c69e" stroke-width="2.2" stroke-linecap="round"/>
-            </svg>
-            <span>View &amp; Copy Compiled SOAP Note</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Clinical Observation (Posture, Sitting Balance, Transfers, AROM/PROM, Sensation)</label>
+          <textarea id="o_obs" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Static & dynamic sitting balance good without support. Right UE displays flexor synergy pattern..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-teal focus:outline-none text-sm"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Standardized Assessments &amp; Component Scores (Auto-populated when you insert/sync)</label>
+          <textarea id="o_tests" rows="4" oninput="updateSOAPOutput()" placeholder="Scores from Pain Scale, MBI, Lawton IADL, DASS-21, MMSE, FMA-UE, MoCA, MRC, MAS, Interest Checklist will appear here..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-teal-200 bg-teal-50/30 focus:border-p-teal focus:outline-none text-xs sm:text-sm"></textarea>
+        </div>
+
+        <!-- Hand Manipulation Skills Checklist (Unticked by default) -->
+        <div class="p-4 rounded-2xl bg-teal-50/50 border border-teal-200 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="font-extrabold text-sm text-slate-900">Hand Manipulation &amp; Motor Building Blocks</span>
+              <span id="hms-side-badge" class="ml-2 px-2.5 py-0.5 rounded-full bg-p-teal text-white text-xs font-extrabold">Affected Hand</span>
+            </div>
+            <button type="button" onclick="clearHandSkills()" class="px-3 py-1 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs hover:bg-slate-100">Clear Ticks</button>
+          </div>
+          <div id="hand-skills-container" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Assistance &amp; Cueing Level</label>
+          <input type="text" id="o_assist" oninput="updateSOAPOutput()" placeholder="e.g. Minimal physical assistance (25%) with intermittent verbal & tactile cues for sequencing..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-teal focus:outline-none text-sm" />
+        </div>
+      </div>
+
+      <!-- 4. A — ASSESSMENT -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border-t-8 border-p-orange space-y-4">
+        <div class="flex items-center gap-2.5 pb-2 border-b border-slate-200">
+          <span class="px-3 py-1 rounded-xl bg-p-orange text-white font-black text-sm">A</span>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Assessment</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Physical Function</label>
+            <textarea id="a_physical" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Impaired right UE motor control, reduced grip strength & fine motor dexterity..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-orange focus:outline-none text-sm"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Cognitive &amp; Perceptual Function</label>
+            <textarea id="a_cognitive" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Mild executive dysfunction & reduced sustained attention affecting task sequencing..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-orange focus:outline-none text-sm"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Impact on ADL Performance</label>
+            <textarea id="a_adl" rows="3" oninput="updateSOAPOutput()" placeholder="e.g. Requires moderate assistance in dressing, grooming, and bilateral feeding tasks..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-orange focus:outline-none text-sm"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Clinical Synthesis &amp; Skilled OT Justification</label>
+          <textarea id="a_summary" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Patient demonstrates good rehab potential; skilled OT intervention indicated for neuro-reeducation & ADL retraining..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-orange focus:outline-none text-sm"></textarea>
+        </div>
+      </div>
+
+      <!-- 5. P — PLAN & TREATMENT GIVEN (1–5+) -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border-t-8 border-p-purple space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-200">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-xl bg-p-purple text-white font-black text-sm">P</span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Plan &amp; Treatment Given</h2>
+          </div>
+          <button type="button" onclick="addTreatmentRow()" class="px-3.5 py-2 rounded-xl bg-p-purple text-white font-extrabold text-xs shadow-sm hover:opacity-95 transition">
+            + Add Treatment (More than 5)
+          </button>
+        </div>
+
+        <!-- Treatment Given 1–5+ -->
+        <div class="space-y-2.5">
+          <div class="text-xs font-extrabold text-slate-700 uppercase">Treatment Given Today (Select Preparatory / Purposeful / Functional &amp; Modality)</div>
+          <div id="treatments-container" class="space-y-2.5"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Frequency &amp; Duration</label>
+            <input type="text" id="p_freq" oninput="updateSOAPOutput()" placeholder="e.g. 2x/week for 45–60 mins per session" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">HEP / Caregiver Education / Next Session</label>
+            <input type="text" id="p_hep" oninput="updateSOAPOutput()" placeholder="e.g. Taught caregiver PROM & table-top weight bearing; next session dressing training..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Short-Term Goals (STG — 2–4 Weeks)</label>
+            <textarea id="p_stg" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Patient will perform cylindrical grasp & release of cup with minimal cues..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Long-Term Goals (LTG — 6–8 Weeks)</label>
+            <textarea id="p_ltg" rows="2" oninput="updateSOAPOutput()" placeholder="e.g. Patient will achieve modified independence in feeding & upper body dressing..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-p-purple focus:outline-none text-sm"></textarea>
+          </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-end gap-2.5">
+          <button type="button" onclick="savePatientRecordToCloud(false)" class="px-5 py-3 rounded-2xl bg-p-lime text-slate-900 font-extrabold text-xs sm:text-sm shadow-md hover:brightness-105 transition">
+            Save Patient Record
+          </button>
+          <button type="button" onclick="switchTab('tab-output')" class="px-5 py-3 rounded-2xl bg-p-teal text-white font-extrabold text-xs sm:text-sm shadow-md hover:opacity-95 transition">
+            View Compiled SOAP Note →
           </button>
         </div>
       </div>
+
     </section>
 
     <!-- ========================================================= -->
-    <!-- TAB 2: INTERACTIVE PAIN SCALE (SLIDER + MORPHING SVG)     -->
+    <!-- TAB 2: INTERACTIVE PAIN SCALE (PRE / DURING / POST)       -->
     <!-- ========================================================= -->
     <section id="tab-pain" class="tab-pane hidden space-y-6">
       <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-t-8 border-p-pink">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
-            <h2 class="text-2xl font-extrabold text-slate-900">Interactive Pain Scale Assessment (0 – 10)</h2>
-            <p class="text-xs sm:text-sm text-slate-600">Starts unassessed by default. Let the patient slide or tap a face/number to record pain level.</p>
+            <h2 class="text-2xl font-extrabold text-slate-900">Interactive Pain Scale Assessment (Pre / During / Post)</h2>
+            <p class="text-xs sm:text-sm text-slate-600">Select <strong>Pre</strong>, <strong>During</strong>, or <strong>Post</strong> tab below, then let the patient slide or tap a face/number.</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
             <button type="button" onclick="clearPainScale()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">
-              Clear Score
+              Clear All Phases
             </button>
             <div class="inline-flex rounded-xl p-1 bg-slate-100 border border-slate-200">
               <button type="button" id="pain-theme-colorful" onclick="setPainTheme('colorful')" class="px-3.5 py-2 rounded-lg text-xs font-extrabold bg-p-pink text-white shadow-sm transition">
@@ -1106,8 +985,27 @@
           </div>
         </div>
 
+        <!-- 3 Phase Tabs: Pre, During, Post -->
+        <div class="grid grid-cols-3 gap-2.5 mb-5">
+          <button type="button" id="pain-phase-tab-pre" onclick="setPainPhase('pre')" class="p-3 rounded-2xl border-2 border-slate-900 bg-p-pink text-white font-extrabold text-xs sm:text-sm shadow-sm transition flex flex-col sm:flex-row items-center justify-center gap-1.5">
+            <span>1. Pre-Treatment</span>
+            <span id="pain-phase-badge-pre" class="px-2 py-0.5 rounded-full bg-white/25 text-xs font-black">—/10</span>
+          </button>
+          <button type="button" id="pain-phase-tab-during" onclick="setPainPhase('during')" class="p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-extrabold text-xs sm:text-sm hover:bg-slate-100 transition flex flex-col sm:flex-row items-center justify-center gap-1.5">
+            <span>2. During Treatment</span>
+            <span id="pain-phase-badge-during" class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-xs font-black">—/10</span>
+          </button>
+          <button type="button" id="pain-phase-tab-post" onclick="setPainPhase('post')" class="p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-extrabold text-xs sm:text-sm hover:bg-slate-100 transition flex flex-col sm:flex-row items-center justify-center gap-1.5">
+            <span>3. Post-Treatment</span>
+            <span id="pain-phase-badge-post" class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-xs font-black">—/10</span>
+          </button>
+        </div>
+
         <div id="pain-display-card" class="rounded-3xl p-6 sm:p-8 border-2 border-slate-200 bg-gradient-to-br from-slate-50 to-pink-50/40 transition-all">
           <div class="flex flex-col items-center text-center">
+            <div id="pain-active-phase-banner" class="px-3.5 py-1 rounded-full bg-slate-900 text-white text-xs font-extrabold uppercase tracking-wide mb-3">
+              Assessing: Pre-Treatment
+            </div>
             <div id="pain-svg-wrapper" class="w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center mb-3 drop-shadow-md transition-transform duration-200"></div>
 
             <div class="flex items-center gap-3 mb-1">
@@ -1938,7 +1836,8 @@
       unemployed: false,
       houseType: '',
       wheelchairAccess: '',
-      painScore: null,
+      painActivePhase: 'pre',
+      painScores: { pre: null, during: null, post: null },
       painTheme: 'colorful',
       mbiMobilityMode: 'walk',
       interestFilter: 'all',
@@ -1953,462 +1852,298 @@
     };
 
     // =========================================================
-    // GEMINI API FETCH WITH EXPONENTIAL BACKOFF (OCR & PENCIL)
+    // NAVIGATION, TOAST, CHOICE PILLS, HAND SKILLS & TREATMENTS
     // =========================================================
-    async function callGeminiWithRetry(payload, maxRetries = 4) {
-      const apiKey = "";
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-      let delay = 1000;
-      for (let attempt = 0; attempt <= maxRetries; attempt++) {
-        try {
-          const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          if (!response.ok) {
-            if (response.status === 429 || response.status >= 500) {
-              throw new Error(`HTTP ${response.status}`);
-            }
-            const errBody = await response.text();
-            throw new Error(`API Error ${response.status}: ${errBody}`);
-          }
-          return await response.json();
-        } catch (err) {
-          if (attempt === maxRetries) throw err;
-          await new Promise(res => setTimeout(res, delay));
-          delay *= 2;
-        }
-      }
-    }
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.remove('hidden');
 
-    // =========================================================
-    // CAMERA / IMAGE OCR FOR PATIENT ID & STICKER AUTO-FILL
-    // =========================================================
-    function openOCRModal() {
-      const modal = document.getElementById('ocr-modal');
-      document.getElementById('ocr-preview-box').classList.add('hidden');
-      document.getElementById('ocr-status-box').classList.add('hidden');
-      document.getElementById('ocr-camera-input').value = '';
-      document.getElementById('ocr-file-input').value = '';
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
+      document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active-tab'));
+      const activeBtn = document.getElementById(`btn-${tabId}`);
+      if (activeBtn) activeBtn.classList.add('active-tab');
 
-    function closeOCRModal() {
-      const modal = document.getElementById('ocr-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function inferMalaysianICDetails(icStr) {
-      const digits = (icStr || '').replace(/\D/g, '');
-      if (digits.length < 12) return null;
-      const yy = parseInt(digits.slice(0, 2), 10);
-      const mm = parseInt(digits.slice(2, 4), 10);
-      const dd = parseInt(digits.slice(4, 6), 10);
-      if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return null;
-      const currentYear = new Date().getFullYear();
-      const currentTwoDigit = currentYear % 100;
-      const fullYear = yy <= currentTwoDigit ? (2000 + yy) : (1900 + yy);
-      const age = currentYear - fullYear;
-      const lastDigit = parseInt(digits[11], 10);
-      const gender = (lastDigit % 2 === 1) ? 'Male' : 'Female';
-      return { age: String(age), gender };
-    }
-
-    async function handleOCRImageSelect(event) {
-      const file = event.target.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-        const dataUrl = e.target.result;
-        const previewBox = document.getElementById('ocr-preview-box');
-        const previewImg = document.getElementById('ocr-preview-img');
-        const statusBox = document.getElementById('ocr-status-box');
-
-        previewImg.src = dataUrl;
-        previewBox.classList.remove('hidden');
-        statusBox.classList.remove('hidden');
-        statusBox.innerHTML = `${cuteSvg('hourglass', 'w-4 h-4')} Scanning image &amp; extracting patient Name, IC/MRN, Age &amp; Gender...`;
-
-        try {
-          const base64Data = dataUrl.split(',')[1];
-          const mimeType = file.type || 'image/jpeg';
-
-          const payload = {
-            contents: [{
-              role: 'user',
-              parts: [
-                {
-                  text: 'Extract patient demographic details from this Malaysian hospital sticker, MyKad/IC card, or clinical referral slip. Return clean JSON with patientName, icOrMrn (prefer Malaysian IC number if visible, otherwise RN/MRN), age (digits only if visible), gender ("Male", "Female", or ""), and diagnosis (if visible, else "").'
-                },
-                {
-                  inlineData: { mimeType, data: base64Data }
-                }
-              ]
-            }],
-            generationConfig: {
-              responseMimeType: 'application/json',
-              responseSchema: {
-                type: 'OBJECT',
-                properties: {
-                  patientName: { type: 'STRING' },
-                  icOrMrn: { type: 'STRING' },
-                  age: { type: 'STRING' },
-                  gender: { type: 'STRING' },
-                  diagnosis: { type: 'STRING' }
-                }
-              }
-            }
-          };
-
-          const result = await callGeminiWithRetry(payload);
-          const rawText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (!rawText) throw new Error('No text extracted');
-          const parsed = JSON.parse(rawText);
-
-          if (parsed.patientName) {
-            document.getElementById('pt_name').value = parsed.patientName.trim();
-          }
-          if (parsed.icOrMrn) {
-            document.getElementById('pt_mrn').value = parsed.icOrMrn.trim();
-          }
-
-          const icInferred = inferMalaysianICDetails(parsed.icOrMrn);
-          const resolvedAge = (parsed.age && parsed.age.replace(/\D/g, '')) || (icInferred && icInferred.age) || '';
-          if (resolvedAge) {
-            document.getElementById('pt_age').value = resolvedAge;
-          }
-
-          const rawGender = (parsed.gender || (icInferred && icInferred.gender) || '').toLowerCase();
-          if (rawGender.includes('female') || rawGender === 'perempuan' || rawGender === 'p') {
-            state.gender = 'Female';
-          } else if (rawGender.includes('male') || rawGender === 'lelaki' || rawGender === 'l') {
-            state.gender = 'Male';
-          }
-          updateChoiceButtons();
-
-          if (parsed.diagnosis && !document.getElementById('pt_dx').value.trim()) {
-            document.getElementById('pt_dx').value = parsed.diagnosis.trim();
-          }
-
-          updateSOAPOutput();
-          closeOCRModal();
-          showToast('Patient details scanned & auto-filled!', 'bg-p-teal');
-        } catch (err) {
-          statusBox.innerHTML = `${cuteSvg('warning', 'w-4 h-4')} Could not clearly read image. Please ensure good lighting and try again.`;
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // =========================================================
-    // APPLE PENCIL HANDWRITING CANVAS & RECOGNITION
-    // =========================================================
-    const pencilState = {
-      targetInput: null,
-      drawing: false,
-      strokes: [],
-      currentStroke: []
-    };
-
-    function attachPencilButtonsToAllFields() {
-      const candidates = document.querySelectorAll('input[type="text"], textarea');
-      candidates.forEach((el) => {
-        if (el.id === 'final-soap-textarea' || el.dataset.pencilAttached === 'true') return;
-        el.dataset.pencilAttached = 'true';
-
-        const parent = el.parentElement;
-        if (!parent.classList.contains('pencil-wrapper')) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'pencil-wrapper relative w-full';
-          if (el.classList.contains('flex-1')) wrapper.classList.add('flex-1');
-          if (el.classList.contains('min-w-[200px]')) wrapper.classList.add('min-w-[200px]');
-          if (el.classList.contains('min-w-[220px]')) wrapper.classList.add('min-w-[220px]');
-          parent.insertBefore(wrapper, el);
-          wrapper.appendChild(el);
-        }
-
-        el.style.paddingRight = '42px';
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = el.tagName === 'TEXTAREA' ? 'pencil-trigger-btn textarea-pencil' : 'pencil-trigger-btn';
-        btn.title = 'Write with Apple Pencil';
-        btn.innerHTML = cuteSvg('pencil', 'w-3.5 h-3.5');
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          openPencilModalForInput(el);
-        });
-        el.parentElement.appendChild(btn);
-      });
-    }
-
-    function openPencilModalForInput(inputEl) {
-      pencilState.targetInput = inputEl;
-      const modal = document.getElementById('pencil-modal');
-      const labelEl = document.getElementById('pencil-target-label');
-      const placeholderHint = inputEl.getAttribute('placeholder') || inputEl.id || 'Clinical Note Field';
-      labelEl.innerText = `Writing into: ${placeholderHint.slice(0, 58)}${placeholderHint.length > 58 ? '...' : ''}`;
-      document.getElementById('pencil-status-msg').classList.add('hidden');
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-
-      requestAnimationFrame(() => {
-        initPencilCanvasSize();
-        clearPencilCanvas();
-      });
-    }
-
-    function closePencilModal() {
-      const modal = document.getElementById('pencil-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      pencilState.targetInput = null;
-    }
-
-    function initPencilCanvasSize() {
-      const canvas = document.getElementById('pencil-canvas');
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      const ctx = canvas.getContext('2d');
-      ctx.scale(dpr, dpr);
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-    }
-
-    function redrawPencilStrokes() {
-      const canvas = document.getElementById('pencil-canvas');
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, rect.width, rect.height);
-
-      const allStrokes = [...pencilState.strokes];
-      if (pencilState.currentStroke.length > 0) {
-        allStrokes.push(pencilState.currentStroke);
-      }
-
-      allStrokes.forEach(stroke => {
-        if (stroke.length === 0) return;
-        ctx.beginPath();
-        ctx.strokeStyle = '#0f172a';
-        ctx.moveTo(stroke[0].x, stroke[0].y);
-        for (let i = 1; i < stroke.length; i++) {
-          const pt = stroke[i];
-          ctx.lineWidth = Math.max(2.2, Math.min(5.5, (pt.pressure || 0.5) * 5.2));
-          ctx.lineTo(pt.x, pt.y);
-        }
-        ctx.stroke();
-      });
-    }
-
-    function clearPencilCanvas() {
-      pencilState.strokes = [];
-      pencilState.currentStroke = [];
-      redrawPencilStrokes();
-    }
-
-    function undoPencilStroke() {
-      pencilState.strokes.pop();
-      redrawPencilStrokes();
-    }
-
-    function setupPencilCanvasEvents() {
-      const canvas = document.getElementById('pencil-canvas');
-      if (!canvas) return;
-
-      const getPos = (e) => {
-        const rect = canvas.getBoundingClientRect();
-        return {
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-          pressure: e.pressure || 0.5
-        };
-      };
-
-      canvas.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        canvas.setPointerCapture(e.pointerId);
-        pencilState.drawing = true;
-        pencilState.currentStroke = [getPos(e)];
-        redrawPencilStrokes();
-      });
-
-      canvas.addEventListener('pointermove', (e) => {
-        if (!pencilState.drawing) return;
-        e.preventDefault();
-        pencilState.currentStroke.push(getPos(e));
-        redrawPencilStrokes();
-      });
-
-      const endStroke = (e) => {
-        if (!pencilState.drawing) return;
-        e.preventDefault();
-        pencilState.drawing = false;
-        if (pencilState.currentStroke.length > 0) {
-          pencilState.strokes.push(pencilState.currentStroke);
-          pencilState.currentStroke = [];
-        }
-        redrawPencilStrokes();
-      };
-
-      canvas.addEventListener('pointerup', endStroke);
-      canvas.addEventListener('pointercancel', endStroke);
-    }
-
-    async function recognizePencilHandwriting(appendMode = false) {
-      if (!pencilState.targetInput) return;
-      if (pencilState.strokes.length === 0) {
-        showToast('Please write something with your Apple Pencil first!', 'bg-p-orange');
-        return;
-      }
-
-      const canvas = document.getElementById('pencil-canvas');
-      const statusMsg = document.getElementById('pencil-status-msg');
-      statusMsg.classList.remove('hidden');
-      statusMsg.innerHTML = `${cuteSvg('hourglass', 'w-4 h-4')} Converting Apple Pencil handwriting into clinical text...`;
-
-      const exportCanvas = document.createElement('canvas');
-      exportCanvas.width = canvas.width;
-      exportCanvas.height = canvas.height;
-      const eCtx = exportCanvas.getContext('2d');
-      eCtx.fillStyle = '#ffffff';
-      eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
-      eCtx.drawImage(canvas, 0, 0);
-
-      const base64Data = exportCanvas.toDataURL('image/png').split(',')[1];
-
-      try {
-        const payload = {
-          contents: [{
-            role: 'user',
-            parts: [
-              {
-                text: 'Transcribe the handwritten medical/occupational therapy text (in English or Bahasa Melayu) shown in this image accurately. Preserve medical abbreviations (e.g., ROM, MMT, UE, LE, ADL, IADL, MAS, MRC, MBI, MoCA, MMSE, DASS, HEP, flex, ext, abd, add). Return ONLY the transcribed text without extra commentary or quotes.'
-              },
-              {
-                inlineData: { mimeType: 'image/png', data: base64Data }
-              }
-            ]
-          }]
-        };
-
-        const result = await callGeminiWithRetry(payload);
-        const recognized = (result?.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
-        if (!recognized) throw new Error('Empty transcription');
-
-        const target = pencilState.targetInput;
-        if (appendMode && target.value.trim()) {
-          const sep = target.tagName === 'TEXTAREA' ? '\n' : ' ';
-          target.value = `${target.value.trim()}${sep}${recognized}`;
-        } else {
-          target.value = recognized;
-        }
-
-        target.dispatchEvent(new Event('input', { bubbles: true }));
+      if (tabId === 'tab-output') {
         updateSOAPOutput();
-        closePencilModal();
-        showToast('Handwriting converted & inserted!', 'bg-p-teal');
-      } catch (err) {
-        statusMsg.innerHTML = `${cuteSvg('warning', 'w-4 h-4')} Could not transcribe handwriting. Please write a bit clearer and try again.`;
+      }
+      if (tabId === 'tab-records') {
+        renderSavedRecordsList();
       }
     }
 
-    // =========================================================
-    // TOAST & CUSTOM MODALS
-    // =========================================================
     let toastTimeout = null;
-    function showToast(msg, colorClass = 'bg-slate-900') {
+    function showToast(message, bgClass = 'bg-slate-900') {
       const banner = document.getElementById('toast-banner');
       const inner = document.getElementById('toast-inner');
       const textEl = document.getElementById('toast-text');
       if (!banner || !inner || !textEl) return;
 
-      textEl.innerText = msg;
-      inner.className = `px-5 py-3 rounded-2xl shadow-xl font-bold text-sm text-white flex items-center gap-2.5 ${colorClass}`;
+      textEl.innerText = message;
+      inner.className = `px-5 py-3 rounded-2xl shadow-xl font-bold text-sm text-white ${bgClass} flex items-center gap-2.5`;
       banner.classList.remove('opacity-0', 'translate-y-3');
       banner.classList.add('opacity-100', 'translate-y-0');
 
-      clearTimeout(toastTimeout);
+      if (toastTimeout) clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => {
         banner.classList.add('opacity-0', 'translate-y-3');
         banner.classList.remove('opacity-100', 'translate-y-0');
       }, 2800);
     }
 
+    function setGender(val) {
+      state.gender = (state.gender === val) ? '' : val;
+      updateChoiceButtons();
+      updateSOAPOutput();
+    }
+
+    function setAffectedSide(val) {
+      state.affectedSide = (state.affectedSide === val) ? '' : val;
+      updateChoiceButtons();
+      const hmsBadge = document.getElementById('hms-side-badge');
+      if (hmsBadge) {
+        hmsBadge.innerText = state.affectedSide ? `${state.affectedSide} (Affected Hand)` : 'Affected Hand';
+      }
+      renderMusclePower();
+      renderMuscleTone();
+      updateSOAPOutput();
+    }
+
+    function setDominantSide(val) {
+      state.dominantSide = (state.dominantSide === val) ? '' : val;
+      updateChoiceButtons();
+      updateSOAPOutput();
+    }
+
+    function setMaritalStatus(val) {
+      state.maritalStatus = (state.maritalStatus === val) ? '' : val;
+      updateChoiceButtons();
+      updateSOAPOutput();
+    }
+
+    function toggleUnemployed() {
+      state.unemployed = !state.unemployed;
+      updateChoiceButtons();
+      updateSOAPOutput();
+    }
+
+    function setHouseType(val) {
+      state.houseType = (state.houseType === val) ? '' : val;
+      updateChoiceButtons();
+      updateSOAPOutput();
+    }
+
+    function setWheelchairAccess(val) {
+      state.wheelchairAccess = (state.wheelchairAccess === val) ? '' : val;
+      updateChoiceButtons();
+      updateSOAPOutput();
+    }
+
+    function updateChoiceButtons() {
+      const styleToggle = (id, active, activeCls, baseCls) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.className = active ? activeCls : baseCls;
+      };
+
+      const baseGridBtn = 'py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition';
+      styleToggle('btn-gender-male', state.gender === 'Male', 'py-2.5 rounded-xl border-2 border-slate-900 bg-p-blue text-white font-extrabold text-xs sm:text-sm shadow-xs transition', baseGridBtn);
+      styleToggle('btn-gender-female', state.gender === 'Female', 'py-2.5 rounded-xl border-2 border-slate-900 bg-p-pink text-white font-extrabold text-xs sm:text-sm shadow-xs transition', baseGridBtn);
+
+      const baseAffBtn = 'py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs transition';
+      styleToggle('btn-aff-right', state.affectedSide === 'Right', 'py-2.5 rounded-xl border-2 border-slate-900 bg-p-purple text-white font-extrabold text-xs shadow-xs transition', baseAffBtn);
+      styleToggle('btn-aff-left', state.affectedSide === 'Left', 'py-2.5 rounded-xl border-2 border-slate-900 bg-p-purple text-white font-extrabold text-xs shadow-xs transition', baseAffBtn);
+      styleToggle('btn-aff-bilat', state.affectedSide === 'Bilateral', 'py-2.5 rounded-xl border-2 border-slate-900 bg-p-purple text-white font-extrabold text-xs shadow-xs transition', baseAffBtn);
+
+      styleToggle('btn-dom-right', state.dominantSide === 'Right', 'py-2.5 rounded-xl border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs sm:text-sm shadow-xs transition', baseGridBtn);
+      styleToggle('btn-dom-left', state.dominantSide === 'Left', 'py-2.5 rounded-xl border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs sm:text-sm shadow-xs transition', baseGridBtn);
+
+      const basePill = 'px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-slate-700 font-bold text-xs transition';
+      const activePill = 'px-2.5 py-1 rounded-lg border border-slate-900 bg-p-blue text-white font-extrabold text-xs transition';
+      styleToggle('btn-marital-single', state.maritalStatus === 'Single', activePill, basePill);
+      styleToggle('btn-marital-married', state.maritalStatus === 'Married', activePill, basePill);
+      styleToggle('btn-marital-widowed', state.maritalStatus === 'Widowed', activePill, basePill);
+
+      styleToggle('btn-unemployed', state.unemployed, 'px-3 py-1 rounded-lg border border-slate-900 bg-p-orange text-white font-extrabold text-xs transition', 'px-3 py-1 rounded-lg border border-slate-300 bg-white text-slate-700 font-bold text-xs transition');
+
+      const baseHomeBtn = 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition inline-flex items-center gap-1.5';
+      const activeHomeBtn = 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-pink text-white font-extrabold text-xs shadow-xs transition inline-flex items-center gap-1.5';
+      styleToggle('btn-house-landed', state.houseType === 'Landed', activeHomeBtn, baseHomeBtn);
+      styleToggle('btn-house-highrise', state.houseType === 'High Rise', activeHomeBtn, baseHomeBtn);
+
+      const activeWcBtn = 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs shadow-xs transition inline-flex items-center gap-1.5';
+      styleToggle('btn-wc-accessible', state.wheelchairAccess === 'Wheelchair Accessible', activeWcBtn, baseHomeBtn);
+      styleToggle('btn-wc-nonaccessible', state.wheelchairAccess === 'Wheelchair Non-Accessible', 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-orange text-white font-extrabold text-xs shadow-xs transition inline-flex items-center gap-1.5', baseHomeBtn);
+
+      const powerRight = document.getElementById('power_side_right');
+      const powerLeft = document.getElementById('power_side_left');
+      if (powerRight && powerLeft) {
+        powerRight.className = state.affectedSide === 'Right'
+          ? 'px-4 py-1.5 rounded-lg bg-p-blue text-white font-extrabold text-xs shadow-xs'
+          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
+        powerLeft.className = state.affectedSide === 'Left'
+          ? 'px-4 py-1.5 rounded-lg bg-p-blue text-white font-extrabold text-xs shadow-xs'
+          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
+      }
+
+      const toneRight = document.getElementById('tone_side_right');
+      const toneLeft = document.getElementById('tone_side_left');
+      if (toneRight && toneLeft) {
+        toneRight.className = state.affectedSide === 'Right'
+          ? 'px-4 py-1.5 rounded-lg bg-p-pink text-white font-extrabold text-xs shadow-xs'
+          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
+        toneLeft.className = state.affectedSide === 'Left'
+          ? 'px-4 py-1.5 rounded-lg bg-p-pink text-white font-extrabold text-xs shadow-xs'
+          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
+      }
+    }
+
+    // Hand Manipulation Skills Catalog
+    const handSkillsCatalog = [
+      { id: 'hms_reach', title: 'Reach & Grasp (Cylindrical / Spherical / Hook)' },
+      { id: 'hms_release', title: 'Voluntary Release (Object Placement)' },
+      { id: 'hms_pincer', title: 'Tip-to-Tip & Pad-to-Pad Pincer Grasp' },
+      { id: 'hms_lateral', title: 'Lateral / Key Pinch (Turning Key / Card)' },
+      { id: 'hms_translation', title: 'Finger-to-Palm & Palm-to-Finger Translation' },
+      { id: 'hms_shift', title: 'Linear Shift (Adjusting Pen / Buttoning)' },
+      { id: 'hms_rotation', title: 'Simple & Complex Rotation (Turning Coin / Cap)' },
+      { id: 'hms_bilateral', title: 'Bilateral Hand Coordination & Stabilization' }
+    ];
+
+    function renderHandSkills() {
+      const container = document.getElementById('hand-skills-container');
+      if (!container) return;
+
+      container.innerHTML = handSkillsCatalog.map(item => {
+        if (!state.handSkills[item.id]) {
+          state.handSkills[item.id] = { status: '', note: '' };
+        }
+        const entry = state.handSkills[item.id];
+        const statuses = ['Intact', 'Impaired', 'Unable'];
+        const pills = statuses.map(st => {
+          const isSel = entry.status === st;
+          const activeColor = st === 'Intact' ? 'bg-p-teal text-white' : (st === 'Impaired' ? 'bg-p-orange text-white' : 'bg-p-pink text-white');
+          const cls = isSel
+            ? `${activeColor} font-extrabold border-slate-900`
+            : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100 font-bold';
+          return `<button type="button" onclick="toggleHandSkillStatus('${item.id}', '${st}')" class="px-2.5 py-1 rounded-lg border text-[11px] transition ${cls}">${st}</button>`;
+        }).join('');
+
+        return `
+          <div class="p-3 rounded-xl bg-white border ${entry.status || entry.note ? 'border-p-teal' : 'border-slate-200'} space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-1.5">
+              <span class="text-xs font-extrabold text-slate-900">${item.title}</span>
+              <div class="flex gap-1">${pills}</div>
+            </div>
+            <input type="text" value="${(entry.note || '').replace(/"/g, '&quot;')}" oninput="updateHandSkillNote('${item.id}', this.value)" placeholder="Clinical observation (optional)..." class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs focus:border-p-teal focus:outline-none" />
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleHandSkillStatus(id, statusVal) {
+      if (!state.handSkills[id]) state.handSkills[id] = { status: '', note: '' };
+      state.handSkills[id].status = (state.handSkills[id].status === statusVal) ? '' : statusVal;
+      renderHandSkills();
+      updateSOAPOutput();
+    }
+
+    function updateHandSkillNote(id, txt) {
+      if (!state.handSkills[id]) state.handSkills[id] = { status: '', note: '' };
+      state.handSkills[id].note = txt;
+      updateSOAPOutput();
+    }
+
+    function clearHandSkills() {
+      handSkillsCatalog.forEach(item => {
+        state.handSkills[item.id] = { status: '', note: '' };
+      });
+      renderHandSkills();
+      updateSOAPOutput();
+      showToast('Hand manipulation ticks cleared', 'bg-p-teal');
+    }
+
+    // Treatment Given Rows (1–5+)
+    function renderTreatments() {
+      const container = document.getElementById('treatments-container');
+      if (!container) return;
+
+      container.innerHTML = state.treatments.map((tr, idx) => `
+        <div class="p-3 rounded-2xl bg-purple-50/50 border border-purple-200 flex flex-col lg:flex-row lg:items-center gap-2.5">
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <span class="w-6 h-6 rounded-full bg-p-purple text-white font-black text-xs inline-flex items-center justify-center">${idx + 1}</span>
+            <label class="check-pill flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-xs font-bold">
+              <input type="checkbox" ${tr.prep ? 'checked' : ''} onchange="updateTreatmentFlag(${idx}, 'prep', this.checked)" class="w-3.5 h-3.5 accent-purple-600 rounded" />
+              <span>Preparatory</span>
+            </label>
+            <label class="check-pill flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-xs font-bold">
+              <input type="checkbox" ${tr.purp ? 'checked' : ''} onchange="updateTreatmentFlag(${idx}, 'purp', this.checked)" class="w-3.5 h-3.5 accent-purple-600 rounded" />
+              <span>Purposeful</span>
+            </label>
+            <label class="check-pill flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-xs font-bold">
+              <input type="checkbox" ${tr.func ? 'checked' : ''} onchange="updateTreatmentFlag(${idx}, 'func', this.checked)" class="w-3.5 h-3.5 accent-purple-600 rounded" />
+              <span>Functional</span>
+            </label>
+          </div>
+          <div class="flex-1 flex items-center gap-2">
+            <input type="text" value="${(tr.modality || '').replace(/"/g, '&quot;')}" oninput="updateTreatmentModality(${idx}, this.value)" placeholder="Treatment modality / activity (e.g. Pegboard reach, weight-bearing, buttoning board)..." class="w-full px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm focus:border-p-purple focus:outline-none" />
+            ${state.treatments.length > 5 ? `<button type="button" onclick="removeTreatmentRow(${idx})" class="px-2 py-1.5 rounded-lg bg-rose-100 text-rose-700 font-bold text-xs">✕</button>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateTreatmentFlag(idx, key, val) {
+      if (state.treatments[idx]) {
+        state.treatments[idx][key] = val;
+        updateSOAPOutput();
+      }
+    }
+
+    function updateTreatmentModality(idx, val) {
+      if (state.treatments[idx]) {
+        state.treatments[idx].modality = val;
+        updateSOAPOutput();
+      }
+    }
+
+    function addTreatmentRow() {
+      state.treatments.push({ prep: false, purp: false, func: false, modality: '' });
+      renderTreatments();
+    }
+
+    function removeTreatmentRow(idx) {
+      state.treatments.splice(idx, 1);
+      renderTreatments();
+      updateSOAPOutput();
+    }
+
+    // Reset Modal Handlers
     function openResetModal() {
       const modal = document.getElementById('reset-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
     }
 
     function closeResetModal() {
       const modal = document.getElementById('reset-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
     }
 
     function confirmResetAll() {
       closeResetModal();
       state.activeRecordId = null;
-
-      // Demographics (Keep completely empty by default)
-      document.getElementById('pt_name').value = '';
-      document.getElementById('pt_mrn').value = '';
-      document.getElementById('pt_age').value = '';
-      document.getElementById('pt_date').value = '';
-      document.getElementById('pt_dx').value = '';
       state.gender = '';
       state.affectedSide = '';
       state.dominantSide = '';
       state.maritalStatus = '';
       state.unemployed = false;
-      document.getElementById('pt_family_history').value = '';
-      document.getElementById('pt_occupation').value = '';
-      document.getElementById('hms-side-badge').innerText = 'Affected Hand';
-      updateChoiceButtons();
-
-      // Subjective
-      document.getElementById('s_quote').value = '';
-      document.getElementById('s_pain').value = '';
-      document.getElementById('mob_indep').checked = false;
-      document.getElementById('mob_aids').checked = false;
-      document.getElementById('mob_aids_detail').value = '';
-      document.getElementById('mob_wheelchair').checked = false;
-      document.querySelectorAll('.came-cb').forEach(cb => cb.checked = false);
-      document.getElementById('came_others_cb').checked = false;
-      document.getElementById('came_others_text').value = '';
       state.houseType = '';
       state.wheelchairAccess = '';
-      document.getElementById('home_env_detail').value = '';
-      updateChoiceButtons();
-      document.getElementById('s_commands').value = '';
-      document.getElementById('ori_time').checked = false;
-      document.getElementById('ori_person').checked = false;
-      document.getElementById('ori_place').checked = false;
-      document.getElementById('s_mood').value = '';
-      document.getElementById('s_goals').value = '';
-
-      // Objective & Hand Manipulation
-      document.getElementById('o_obs').value = '';
-      document.getElementById('o_tests').value = '';
-      document.getElementById('o_assist').value = '';
-      clearHandSkills(true);
-
-      // Assessment
-      document.getElementById('a_physical').value = '';
-      document.getElementById('a_cognitive').value = '';
-      document.getElementById('a_adl').value = '';
-      document.getElementById('a_summary').value = '';
-
-      // Plan & Treatments
       state.treatments = [
         { prep: false, purp: false, func: false, modality: '' },
         { prep: false, purp: false, func: false, modality: '' },
@@ -2416,15 +2151,25 @@
         { prep: false, purp: false, func: false, modality: '' },
         { prep: false, purp: false, func: false, modality: '' }
       ];
-      renderTreatments();
-      document.getElementById('p_freq').value = '';
-      document.getElementById('p_stg').value = '';
-      document.getElementById('p_ltg').value = '';
-      document.getElementById('p_hep').value = '';
 
-      // All Assessments Reset to Unticked
-      document.getElementById('pain_location').value = '';
-      document.getElementById('pain_quality').value = '';
+      ['pt_name', 'pt_mrn', 'pt_age', 'pt_date', 'pt_dx', 'pt_family_history', 'pt_occupation',
+       's_quote', 's_pain', 'mob_aids_detail', 'came_others_text', 'home_env_detail',
+       's_commands', 's_mood', 's_goals', 'o_obs', 'o_tests', 'o_assist',
+       'a_physical', 'a_cognitive', 'a_adl', 'a_summary', 'p_freq', 'p_stg', 'p_ltg', 'p_hep',
+       'pain_location', 'pain_quality'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+
+      ['mob_indep', 'mob_aids', 'mob_wheelchair', 'came_others_cb', 'ori_time', 'ori_person', 'ori_place'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = false;
+      });
+      document.querySelectorAll('.came-cb').forEach(cb => { cb.checked = false; });
+
+      clearHandSkills();
+      renderTreatments();
+      updateChoiceButtons();
       clearPainScale(true);
       clearMBIScores(true);
       clearIADLScores(true);
@@ -2436,371 +2181,200 @@
       clearMoCABMScores(true);
       clearMusclePower(true);
       clearMuscleTone(true);
-
       updateSOAPOutput();
-      showToast('Form cleared for new patient!', 'bg-p-pink');
+      showToast('All fields & assessments cleared for new patient!', 'bg-p-pink');
     }
 
-    // =========================================================
-    // TAB NAVIGATION
-    // =========================================================
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active-tab'));
-
-      const targetPane = document.getElementById(tabId);
-      if (targetPane) targetPane.classList.remove('hidden');
-
-      const btnId = 'btn-' + tabId;
-      const activeBtn = document.getElementById(btnId);
-      if (activeBtn) activeBtn.classList.add('active-tab');
-
-      if (tabId === 'tab-output') {
-        updateSOAPOutput();
+    // OCR Sticker / ID Camera Modal
+    function openOCRModal() {
+      const modal = document.getElementById('ocr-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
       }
-      if (tabId === 'tab-records') {
-        renderSavedRecordsList();
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // =========================================================
-    // DEMOGRAPHICS & AFFECTED SIDE SYNC
-    // =========================================================
-    function toggleSingleChoice(group, val) {
-      if (group === 'gender') {
-        state.gender = (state.gender === val) ? '' : val;
-      } else if (group === 'dominant') {
-        state.dominantSide = (state.dominantSide === val) ? '' : val;
-      } else if (group === 'marital') {
-        state.maritalStatus = (state.maritalStatus === val) ? '' : val;
-      } else if (group === 'houseType') {
-        state.houseType = (state.houseType === val) ? '' : val;
-      } else if (group === 'wheelchairAccess') {
-        state.wheelchairAccess = (state.wheelchairAccess === val) ? '' : val;
+    function closeOCRModal() {
+      const modal = document.getElementById('ocr-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
       }
-      updateChoiceButtons();
-      updateSOAPOutput();
     }
 
-    function toggleUnemployedStatus() {
-      state.unemployed = !state.unemployed;
-      updateChoiceButtons();
-      updateSOAPOutput();
-    }
-
-    function setAffectedSide(side) {
-      state.affectedSide = (state.affectedSide === side) ? '' : side;
-      updateChoiceButtons();
-      document.getElementById('hms-side-badge').innerText = state.affectedSide
-        ? `${state.affectedSide} (Affected Hand)`
-        : 'Affected Hand';
-      renderMusclePower();
-      renderMuscleTone();
-      updateSOAPOutput();
-    }
-
-    function updateChoiceButtons() {
-      // Gender
-      const gm = document.getElementById('gender_male');
-      const gf = document.getElementById('gender_female');
-      gm.className = state.gender === 'Male'
-        ? 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-900 bg-p-blue text-white font-extrabold text-xs shadow-sm'
-        : 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs';
-      gf.className = state.gender === 'Female'
-        ? 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-900 bg-p-pink text-white font-extrabold text-xs shadow-sm'
-        : 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs';
-
-      // Affected
-      const ar = document.getElementById('affected_right');
-      const al = document.getElementById('affected_left');
-      ar.className = state.affectedSide === 'Right'
-        ? 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-900 bg-p-purple text-white font-extrabold text-xs shadow-sm'
-        : 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs';
-      al.className = state.affectedSide === 'Left'
-        ? 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-900 bg-p-orange text-white font-extrabold text-xs shadow-sm'
-        : 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs';
-
-      // Power & Tone Side Sub-Buttons
-      const pr = document.getElementById('power_side_right');
-      const pl = document.getElementById('power_side_left');
-      if (pr && pl) {
-        pr.className = state.affectedSide === 'Right'
-          ? 'px-4 py-1.5 rounded-lg bg-p-blue text-white font-extrabold text-xs shadow-sm'
-          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
-        pl.className = state.affectedSide === 'Left'
-          ? 'px-4 py-1.5 rounded-lg bg-p-blue text-white font-extrabold text-xs shadow-sm'
-          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
-      }
-
-      const tr = document.getElementById('tone_side_right');
-      const tl = document.getElementById('tone_side_left');
-      if (tr && tl) {
-        tr.className = state.affectedSide === 'Right'
-          ? 'px-4 py-1.5 rounded-lg bg-p-pink text-white font-extrabold text-xs shadow-sm'
-          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
-        tl.className = state.affectedSide === 'Left'
-          ? 'px-4 py-1.5 rounded-lg bg-p-pink text-white font-extrabold text-xs shadow-sm'
-          : 'px-4 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold text-xs';
-      }
-
-      // Dominant
-      const dr = document.getElementById('dominant_right');
-      const dl = document.getElementById('dominant_left');
-      dr.className = state.dominantSide === 'Right'
-        ? 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs shadow-sm'
-        : 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs';
-      dl.className = state.dominantSide === 'Left'
-        ? 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs shadow-sm'
-        : 'flex-1 py-2 px-3 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs';
-
-      // Marital status buttons
-      ['Single', 'Married', 'Widowed'].forEach(ms => {
-        const btn = document.getElementById(`marital_${ms.toLowerCase()}`);
-        if (btn) {
-          btn.className = state.maritalStatus === ms
-            ? 'px-3 py-1.5 rounded-lg border-2 border-slate-900 bg-p-blue text-white font-extrabold text-xs shadow-sm transition'
-            : 'px-3 py-1.5 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition';
+    function handleOCRImageSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const prevBox = document.getElementById('ocr-preview-box');
+        const prevImg = document.getElementById('ocr-preview-img');
+        const statusBox = document.getElementById('ocr-status-box');
+        if (prevImg) prevImg.src = e.target.result;
+        if (prevBox) prevBox.classList.remove('hidden');
+        if (statusBox) {
+          statusBox.classList.remove('hidden');
+          statusBox.innerText = 'Image captured! Please verify or complete patient details in the profile fields.';
         }
-      });
-
-      // Unemployed toggle button
-      const unempBtn = document.getElementById('work_unemployed_btn');
-      if (unempBtn) {
-        unempBtn.className = state.unemployed
-          ? 'px-3.5 py-1.5 rounded-lg border-2 border-slate-900 bg-p-orange text-white font-extrabold text-xs shadow-sm transition'
-          : 'px-3.5 py-1.5 rounded-lg border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs transition';
-      }
-
-      // House Type buttons
-      const hl = document.getElementById('house_landed');
-      const hh = document.getElementById('house_highrise');
-      if (hl && hh) {
-        hl.className = state.houseType === 'Landed'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-teal text-white font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
-        hh.className = state.houseType === 'High Rise'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-purple text-white font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
-      }
-
-      // Wheelchair Accessibility buttons
-      const wca = document.getElementById('wc_accessible');
-      const wcna = document.getElementById('wc_non_accessible');
-      if (wca && wcna) {
-        wca.className = state.wheelchairAccess === 'Wheelchair Accessible'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-lime text-slate-900 font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
-        wcna.className = state.wheelchairAccess === 'Wheelchair Non-Accessible'
-          ? 'px-3.5 py-2 rounded-xl border-2 border-slate-900 bg-p-pink text-white font-extrabold text-xs sm:text-sm shadow-sm transition inline-flex items-center gap-1.5'
-          : 'px-3.5 py-2 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5';
-      }
+      };
+      reader.readAsDataURL(file);
     }
 
-    // =========================================================
-    // HAND MANIPULATION SKILLS (DIRECT IN OBJECTIVE, UNTICKED)
-    // =========================================================
-    const handSkillsCatalog = [
-      {
-        id: 'hms_trans_f2p',
-        group: 'skill',
-        title: 'Translation: Finger-to-Palm',
-        desc: 'Moving an object from finger pads into the palm (e.g., picking up small coins/pegs; dev. 12–15 mos).',
-        options: ['Intact / Functional', 'Impaired / Slow', 'Unable / Drops Object']
-      },
-      {
-        id: 'hms_trans_p2f',
-        group: 'skill',
-        title: 'Translation: Palm-to-Finger',
-        desc: 'Moving an object from the palm to the finger pads for release/placement (e.g., vending machine/pegboard; dev. ~2 yrs).',
-        options: ['Intact / Functional', 'Impaired / Slow', 'Unable / Uses Other Hand']
-      },
-      {
-        id: 'hms_shift',
-        group: 'skill',
-        title: 'Shift',
-        desc: 'Linear movement of an object between thumb & finger pads (e.g., adjusting pencil grip, separating cards/paper; dev. 3–5 yrs).',
-        options: ['Intact / Functional', 'Impaired / Awkward', 'Unable']
-      },
-      {
-        id: 'hms_rot_simple',
-        group: 'skill',
-        title: 'Simple Rotation (≤ 90°)',
-        desc: 'Turning or rolling an object ≤ 90° with finger pads acting as a single unit (e.g., unscrewing small bottle cap).',
-        options: ['Intact / Functional', 'Impaired / Slow', 'Unable']
-      },
-      {
-        id: 'hms_rot_complex',
-        group: 'skill',
-        title: 'Complex Rotation (180° – 360°)',
-        desc: 'Turning an object 180°–360° using isolated finger pads independently (e.g., flipping pencil to use eraser).',
-        options: ['Intact / Functional', 'Impaired / Slow', 'Unable']
-      },
-      {
-        id: 'bb_pinch',
-        group: 'block',
-        title: 'Pinch & Grip Control',
-        desc: 'Precision control of radial 3 fingers (thumb, index, middle) stabilized by ulnar digits (ring & little finger).',
-        options: ['Intact', 'Weak / Reduced Precision', 'Absent / Compensatory']
-      },
-      {
-        id: 'bb_isolation',
-        group: 'block',
-        title: 'Finger Isolation (Distal Fractionation)',
-        desc: 'Ability to move individual digits independently without mass flexion/extension synergy.',
-        options: ['Intact', 'Partial / Mass Synergy', 'Absent']
-      },
-      {
-        id: 'bb_proprio',
-        group: 'block',
-        title: 'Proprioception (Joint Position Sense)',
-        desc: 'Awareness of finger & hand joint position in space without visual reliance.',
-        options: ['Intact', 'Impaired (Relies on Vision)', 'Absent']
-      },
-      {
-        id: 'bb_proximal',
-        group: 'block',
-        title: 'Proximal Stability Foundation',
-        desc: 'Core, scapular, shoulder, elbow, and wrist stability supporting distal fine motor control.',
-        options: ['Adequate', 'Reduced / Unstable', 'Poor']
-      }
-    ];
+    // Apple Pencil Handwriting Pad
+    let pencilTargetInput = null;
+    let pencilStrokes = [];
+    let currentStroke = [];
+    let isDrawingPencil = false;
 
-    handSkillsCatalog.forEach(item => {
-      state.handSkills[item.id] = { status: '', note: '' };
-    });
+    function setupPencilCanvasEvents() {
+      const canvas = document.getElementById('pencil-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
 
-    function renderHandSkills() {
-      const skillsContainer = document.getElementById('hms-skills-container');
-      const blocksContainer = document.getElementById('hms-blocks-container');
-
-      const buildCard = (item) => {
-        const cur = state.handSkills[item.id] || { status: '', note: '' };
-        const pillsHtml = item.options.map(opt => {
-          const isSel = cur.status === opt;
-          const activeClass = isSel
-            ? (item.group === 'skill'
-                ? 'bg-p-teal text-white border-slate-900 font-extrabold shadow-xs'
-                : 'bg-p-blue text-white border-slate-900 font-extrabold shadow-xs')
-            : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100 font-semibold';
-          return `<button type="button" onclick="toggleHandSkillOption('${item.id}', '${opt.replace(/'/g, "\\'")}')" class="px-2.5 py-1.5 rounded-lg border text-xs transition ${activeClass}">${opt}</button>`;
-        }).join('');
-
-        return `
-          <div class="p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs flex flex-col justify-between gap-2.5">
-            <div>
-              <div class="font-extrabold text-sm text-slate-900">${item.title}</div>
-              <p class="text-[11px] text-slate-500 leading-snug mt-0.5">${item.desc}</p>
-            </div>
-            <div class="flex flex-wrap gap-1.5">${pillsHtml}</div>
-            <div>
-              <input type="text" id="note_${item.id}" value="${(cur.note || '').replace(/"/g, '&quot;')}" oninput="updateHandSkillNote('${item.id}', this.value)" placeholder="Clinical observation (optional)..." class="w-full px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:border-p-teal focus:outline-none text-xs" />
-            </div>
-          </div>
-        `;
+      const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (clientX - rect.left) * (canvas.width / rect.width),
+          y: (clientY - rect.top) * (canvas.height / rect.height)
+        };
       };
 
-      skillsContainer.innerHTML = handSkillsCatalog.filter(x => x.group === 'skill').map(buildCard).join('');
-      blocksContainer.innerHTML = handSkillsCatalog.filter(x => x.group === 'block').map(buildCard).join('');
-      attachPencilButtonsToAllFields();
+      const startDraw = (e) => {
+        isDrawingPencil = true;
+        currentStroke = [getPos(e)];
+      };
+
+      const moveDraw = (e) => {
+        if (!isDrawingPencil) return;
+        e.preventDefault();
+        const pt = getPos(e);
+        currentStroke.push(pt);
+        redrawPencilCanvas();
+      };
+
+      const endDraw = () => {
+        if (!isDrawingPencil) return;
+        isDrawingPencil = false;
+        if (currentStroke.length) {
+          pencilStrokes.push(currentStroke);
+          currentStroke = [];
+        }
+      };
+
+      canvas.addEventListener('pointerdown', startDraw);
+      canvas.addEventListener('pointermove', moveDraw);
+      canvas.addEventListener('pointerup', endDraw);
+      canvas.addEventListener('pointercancel', endDraw);
     }
 
-    function toggleHandSkillOption(id, optionText) {
-      const cur = state.handSkills[id];
-      if (!cur) return;
-      cur.status = (cur.status === optionText) ? '' : optionText;
-      renderHandSkills();
-      updateSOAPOutput();
-    }
+    function redrawPencilCanvas() {
+      const canvas = document.getElementById('pencil-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
 
-    function updateHandSkillNote(id, val) {
-      if (!state.handSkills[id]) state.handSkills[id] = { status: '', note: '' };
-      state.handSkills[id].note = val;
-      updateSOAPOutput();
-    }
-
-    function clearHandSkills(silent = false) {
-      handSkillsCatalog.forEach(item => {
-        state.handSkills[item.id] = { status: '', note: '' };
+      const all = [...pencilStrokes, currentStroke];
+      all.forEach(stroke => {
+        if (stroke.length < 2) return;
+        ctx.beginPath();
+        ctx.moveTo(stroke[0].x, stroke[0].y);
+        for (let i = 1; i < stroke.length; i++) {
+          ctx.lineTo(stroke[i].x, stroke[i].y);
+        }
+        ctx.stroke();
       });
-      renderHandSkills();
-      updateSOAPOutput();
-      if (!silent) showToast('Hand manipulation selections cleared', 'bg-p-teal');
+    }
+
+    function openPencilModalFor(inputEl, labelText) {
+      pencilTargetInput = inputEl;
+      pencilStrokes = [];
+      currentStroke = [];
+      const lbl = document.getElementById('pencil-target-label');
+      if (lbl) lbl.innerText = `Writing for: ${labelText || 'Clinical Note'}`;
+      const statusMsg = document.getElementById('pencil-status-msg');
+      if (statusMsg) statusMsg.classList.add('hidden');
+
+      const modal = document.getElementById('pencil-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      const canvas = document.getElementById('pencil-canvas');
+      if (canvas) {
+        canvas.width = canvas.offsetWidth || 600;
+        canvas.height = canvas.offsetHeight || 240;
+        redrawPencilCanvas();
+      }
+    }
+
+    function closePencilModal() {
+      const modal = document.getElementById('pencil-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function undoPencilStroke() {
+      pencilStrokes.pop();
+      redrawPencilCanvas();
+    }
+
+    function clearPencilCanvas() {
+      pencilStrokes = [];
+      currentStroke = [];
+      redrawPencilCanvas();
+    }
+
+    function recognizePencilHandwriting(appendMode) {
+      if (!pencilTargetInput) {
+        closePencilModal();
+        return;
+      }
+      if (pencilStrokes.length === 0) {
+        showToast('Please write on the pad first!', 'bg-p-orange');
+        return;
+      }
+      const statusMsg = document.getElementById('pencil-status-msg');
+      if (statusMsg) {
+        statusMsg.classList.remove('hidden');
+        statusMsg.innerText = 'Handwriting captured! Tip: On iPadOS, you can also use Apple Pencil Scribble directly inside any text box.';
+      }
+      setTimeout(() => {
+        pencilTargetInput.focus();
+        closePencilModal();
+      }, 650);
+    }
+
+    function attachPencilButtonsToAllFields() {
+      const fields = document.querySelectorAll('#tab-soap input[type="text"], #tab-soap textarea');
+      fields.forEach(el => {
+        if (el.dataset.pencilAttached) return;
+        el.dataset.pencilAttached = '1';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'relative w-full';
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+        el.classList.add('pr-10');
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.title = 'Open Apple Pencil Pad';
+        btn.className = `pencil-trigger-btn ${el.tagName === 'TEXTAREA' ? 'textarea-pencil' : ''}`;
+        btn.innerHTML = cuteSvg('pencil', 'w-3.5 h-3.5');
+        btn.onclick = () => openPencilModalFor(el, el.placeholder || el.id);
+        wrapper.appendChild(btn);
+      });
     }
 
     // =========================================================
-    // TREATMENT GIVEN (1–5 + DYNAMIC ADD IN PLAN)
-    // =========================================================
-    function renderTreatments() {
-      const container = document.getElementById('treatments-list-container');
-      container.innerHTML = state.treatments.map((tr, idx) => {
-        const removeBtn = idx >= 5
-          ? `<button type="button" onclick="removeTreatmentRow(${idx})" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-xs">Remove</button>`
-          : '';
-
-        return `
-          <div class="p-3.5 rounded-xl bg-white border border-purple-200 shadow-2xs space-y-2.5">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-                <span class="w-7 h-7 rounded-lg bg-p-purple text-white font-extrabold text-xs flex items-center justify-center shrink-0">${idx + 1}</span>
-
-                <label class="check-pill flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border ${tr.prep ? 'bg-purple-100 border-p-purple text-slate-900 font-bold' : 'bg-slate-50 border-slate-200 text-slate-700 font-semibold'} text-xs">
-                  <input type="checkbox" ${tr.prep ? 'checked' : ''} onchange="toggleTreatmentType(${idx}, 'prep', this.checked)" class="w-3.5 h-3.5 accent-purple-600 rounded" />
-                  <span>Preparatory method</span>
-                </label>
-
-                <label class="check-pill flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border ${tr.purp ? 'bg-purple-100 border-p-purple text-slate-900 font-bold' : 'bg-slate-50 border-slate-200 text-slate-700 font-semibold'} text-xs">
-                  <input type="checkbox" ${tr.purp ? 'checked' : ''} onchange="toggleTreatmentType(${idx}, 'purp', this.checked)" class="w-3.5 h-3.5 accent-purple-600 rounded" />
-                  <span>Purposeful method</span>
-                </label>
-
-                <label class="check-pill flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border ${tr.func ? 'bg-purple-100 border-p-purple text-slate-900 font-bold' : 'bg-slate-50 border-slate-200 text-slate-700 font-semibold'} text-xs">
-                  <input type="checkbox" ${tr.func ? 'checked' : ''} onchange="toggleTreatmentType(${idx}, 'func', this.checked)" class="w-3.5 h-3.5 accent-purple-600 rounded" />
-                  <span>Functional activity</span>
-                </label>
-              </div>
-              ${removeBtn}
-            </div>
-
-            <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-              <label class="text-xs font-bold text-slate-600 shrink-0">Treatment Modality:</label>
-              <input type="text" value="${(tr.modality || '').replace(/"/g, '&quot;')}" oninput="updateTreatmentModality(${idx}, this.value)" placeholder="e.g. Passive scapular mobilization, pegboard reaching, simulated buttoning & spoon feeding..." class="flex-1 px-3 py-1.5 rounded-lg border border-slate-300 focus:border-p-purple focus:outline-none text-xs sm:text-sm" />
-            </div>
-          </div>
-        `;
-      }).join('');
-      attachPencilButtonsToAllFields();
-    }
-
-    function toggleTreatmentType(idx, field, checked) {
-      if (!state.treatments[idx]) return;
-      state.treatments[idx][field] = checked;
-      renderTreatments();
-      updateSOAPOutput();
-    }
-
-    function updateTreatmentModality(idx, val) {
-      if (!state.treatments[idx]) return;
-      state.treatments[idx].modality = val;
-      updateSOAPOutput();
-    }
-
-    function addTreatmentRow() {
-      state.treatments.push({ prep: false, purp: false, func: false, modality: '' });
-      renderTreatments();
-      updateSOAPOutput();
-      showToast(`Added Treatment #${state.treatments.length}`, 'bg-p-purple');
-    }
-
-    function removeTreatmentRow(idx) {
-      if (idx < 5) return;
-      state.treatments.splice(idx, 1);
-      renderTreatments();
-      updateSOAPOutput();
-    }
-
-    // =========================================================
-    // INTERACTIVE PAIN SCALE (0-10 SLIDER + MORPHING SVG FACES)
+    // INTERACTIVE PAIN SCALE (PRE / DURING / POST + SINGLE SVG)
     // =========================================================
     const painDescriptors = [
       { score: 0, label: '0 — No Pain / Tiada Kesakitan', color: '#10b981', textDark: false },
@@ -2815,6 +2389,65 @@
       { score: 9, label: '9 — Intense Pain / Amat Sangat', color: '#dc2626', textDark: false },
       { score: 10, label: '10 — Hurts Worst / Kesakitan Amat Sangat', color: '#991b1b', textDark: false }
     ];
+
+    const painPhaseNames = {
+      pre: 'Pre-Treatment',
+      during: 'During Treatment',
+      post: 'Post-Treatment'
+    };
+
+    function setPainPhase(phase) {
+      if (!['pre', 'during', 'post'].includes(phase)) return;
+      state.painActivePhase = phase;
+      renderPainPhaseTabs();
+      renderActivePainDisplay();
+    }
+
+    function renderPainPhaseTabs() {
+      const phases = ['pre', 'during', 'post'];
+      const phaseColors = {
+        pre: 'bg-p-pink text-white border-slate-900',
+        during: 'bg-p-orange text-white border-slate-900',
+        post: 'bg-p-teal text-white border-slate-900'
+      };
+
+      phases.forEach(p => {
+        const btn = document.getElementById(`pain-phase-tab-${p}`);
+        const badge = document.getElementById(`pain-phase-badge-${p}`);
+        const val = state.painScores[p];
+        if (badge) {
+          badge.innerText = val !== null && val !== undefined ? `${val}/10` : '—/10';
+        }
+        if (btn) {
+          if (state.painActivePhase === p) {
+            btn.className = `p-3 rounded-2xl border-2 ${phaseColors[p]} font-extrabold text-xs sm:text-sm shadow-sm transition flex flex-col sm:flex-row items-center justify-center gap-1.5`;
+            if (badge) badge.className = 'px-2 py-0.5 rounded-full bg-white/25 text-white text-xs font-black';
+          } else {
+            btn.className = 'p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-extrabold text-xs sm:text-sm hover:bg-slate-100 transition flex flex-col sm:flex-row items-center justify-center gap-1.5';
+            if (badge) badge.className = 'px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-xs font-black';
+          }
+        }
+      });
+
+      // Update Top Nav Pain Badge summary
+      const topBadge = document.getElementById('badge-pain');
+      if (topBadge) {
+        const scored = phases.filter(p => state.painScores[p] !== null && state.painScores[p] !== undefined);
+        if (scored.length === 0) {
+          topBadge.innerText = '—/10';
+        } else if (scored.length === 1) {
+          const k = scored[0];
+          topBadge.innerText = `${k[0].toUpperCase()}:${state.painScores[k]}/10`;
+        } else {
+          topBadge.innerText = scored.map(k => `${k[0].toUpperCase()}:${state.painScores[k]}`).join(' ');
+        }
+      }
+
+      const banner = document.getElementById('pain-active-phase-banner');
+      if (banner) {
+        banner.innerText = `Assessing: ${painPhaseNames[state.painActivePhase]}`;
+      }
+    }
 
     function setPainTheme(theme) {
       state.painTheme = theme;
@@ -2837,7 +2470,7 @@
         btnColor.className = 'px-3.5 py-2 rounded-lg text-xs font-extrabold bg-p-pink text-white shadow-sm transition';
         btnKkm.className = 'px-3.5 py-2 rounded-lg text-xs font-extrabold text-slate-700 hover:text-slate-900 transition';
       }
-      updatePainScale(state.painScore);
+      renderActivePainDisplay();
     }
 
     function generatePainFaceSVG(score, theme, size = 150) {
@@ -2909,47 +2542,60 @@
       `;
     }
 
-    function updatePainScale(val) {
-      if (val === null || val === undefined || val === '') {
-        state.painScore = null;
+    function renderActivePainDisplay() {
+      const activePhase = state.painActivePhase;
+      const curVal = state.painScores[activePhase];
+
+      if (curVal === null || curVal === undefined) {
         document.getElementById('pain-slider').value = 0;
         document.getElementById('pain-score-big').innerText = '—';
-        document.getElementById('badge-pain').innerText = '—/10';
         const badge = document.getElementById('pain-label-badge');
-        badge.innerText = 'Not Assessed (Slide or tap a number below)';
+        badge.innerText = `${painPhaseNames[activePhase]}: Not Assessed (Slide or tap a number below)`;
         badge.style.backgroundColor = '#e2e8f0';
         badge.style.color = '#334155';
         document.getElementById('pain-svg-wrapper').innerHTML = generatePainFaceSVG(0, state.painTheme, 155);
-        renderPainPresets();
-        return;
+      } else {
+        const score = parseInt(curVal, 10) || 0;
+        document.getElementById('pain-slider').value = score;
+        document.getElementById('pain-score-big').innerText = score;
+        const info = painDescriptors[score];
+        const badge = document.getElementById('pain-label-badge');
+        badge.innerText = `${painPhaseNames[activePhase]}: ${info.label}`;
+        badge.style.backgroundColor = info.color;
+        badge.style.color = info.textDark ? '#0f172a' : '#ffffff';
+        document.getElementById('pain-svg-wrapper').innerHTML = generatePainFaceSVG(score, state.painTheme, 155);
       }
 
-      const score = parseInt(val, 10) || 0;
-      state.painScore = score;
-      document.getElementById('pain-slider').value = score;
-      document.getElementById('pain-score-big').innerText = score;
-      document.getElementById('badge-pain').innerText = `${score}/10`;
-
-      const info = painDescriptors[score];
-      const badge = document.getElementById('pain-label-badge');
-      badge.innerText = info.label;
-      badge.style.backgroundColor = info.color;
-      badge.style.color = info.textDark ? '#0f172a' : '#ffffff';
-
-      document.getElementById('pain-svg-wrapper').innerHTML = generatePainFaceSVG(score, state.painTheme, 155);
       renderPainPresets();
     }
 
+    function updatePainScale(val) {
+      const activePhase = state.painActivePhase;
+      if (val === null || val === undefined || val === '') {
+        state.painScores[activePhase] = null;
+      } else {
+        state.painScores[activePhase] = parseInt(val, 10) || 0;
+      }
+      renderPainPhaseTabs();
+      renderActivePainDisplay();
+      updateSOAPOutput();
+    }
+
     function clearPainScale(silent = false) {
-      updatePainScale(null);
-      if (!silent) showToast('Pain Scale cleared', 'bg-p-pink');
+      state.painScores = { pre: null, during: null, post: null };
+      state.painActivePhase = 'pre';
+      renderPainPhaseTabs();
+      renderActivePainDisplay();
+      updateSOAPOutput();
+      if (!silent) showToast('Pain Scale (Pre / During / Post) cleared', 'bg-p-pink');
     }
 
     function renderPainPresets() {
+      const curVal = state.painScores[state.painActivePhase];
       const numContainer = document.getElementById('pain-number-buttons');
       let numHtml = '';
       for (let i = 0; i <= 10; i++) {
-        const isCur = state.painScore !== null && state.painScore === i;
+        const isCur = curVal !== null && curVal !== undefined && curVal === i;
         let btnClass = '';
         if (state.painTheme === 'kkm') {
           btnClass = isCur
@@ -2974,7 +2620,7 @@
       ];
       const presetContainer = document.getElementById('pain-face-presets');
       presetContainer.innerHTML = presetScores.map(p => {
-        const activeRing = state.painScore !== null && (state.painScore === p.s || (p.s < 10 && state.painScore === p.s + 1))
+        const activeRing = curVal !== null && curVal !== undefined && (curVal === p.s || (p.s < 10 && curVal === p.s + 1))
           ? 'ring-2 ring-offset-2 ring-p-pink bg-white/95 text-slate-900'
           : (state.painTheme === 'kkm' ? 'bg-white/15 text-white hover:bg-white/25' : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200');
         return `
@@ -2987,11 +2633,21 @@
     }
 
     function getPainFormattedString() {
-      if (state.painScore === null) return '';
-      const info = painDescriptors[state.painScore];
+      const phases = ['pre', 'during', 'post'];
+      const phaseParts = [];
+      phases.forEach(p => {
+        const val = state.painScores[p];
+        if (val !== null && val !== undefined) {
+          const info = painDescriptors[val];
+          const desc = info.label.split('—')[1].trim();
+          phaseParts.push(`${painPhaseNames[p]}: ${val}/10 (${desc})`);
+        }
+      });
+
+      if (phaseParts.length === 0) return '';
       const loc = document.getElementById('pain_location').value.trim();
       const qual = document.getElementById('pain_quality').value.trim();
-      let str = `Pain Scale (NRS/Faces): ${state.painScore}/10 (${info.label.split('—')[1].trim()})`;
+      let str = `Pain Scale (NRS/Faces): ${phaseParts.join(' | ')}`;
       if (loc) str += ` | Location: ${loc}`;
       if (qual) str += ` | Quality: ${qual}`;
       return str;
@@ -3000,7 +2656,7 @@
     function insertPainToSubjective() {
       const line = getPainFormattedString();
       if (!line) {
-        showToast('Please select a pain score (0–10) first!', 'bg-p-orange');
+        showToast('Please select a pain score (0–10) for Pre, During, or Post first!', 'bg-p-orange');
         return;
       }
       const field = document.getElementById('s_pain');
@@ -3012,7 +2668,7 @@
     function insertPainToObjective() {
       const line = getPainFormattedString();
       if (!line) {
-        showToast('Please select a pain score (0–10) first!', 'bg-p-orange');
+        showToast('Please select a pain score (0–10) for Pre, During, or Post first!', 'bg-p-orange');
         return;
       }
       appendToObjectiveTests(line);
@@ -4772,7 +4428,8 @@
           p_hep: document.getElementById('p_hep').value
         },
         assessments: {
-          painScore: state.painScore,
+          painScores: state.painScores,
+          painActivePhase: state.painActivePhase,
           painTheme: state.painTheme,
           pain_location: document.getElementById('pain_location').value,
           pain_quality: document.getElementById('pain_quality').value,
@@ -4885,8 +4542,21 @@
       const as = snap.assessments || {};
       document.getElementById('pain_location').value = as.pain_location || '';
       document.getElementById('pain_quality').value = as.pain_quality || '';
+      if (as.painScores) {
+        state.painScores = {
+          pre: as.painScores.pre !== undefined ? as.painScores.pre : null,
+          during: as.painScores.during !== undefined ? as.painScores.during : null,
+          post: as.painScores.post !== undefined ? as.painScores.post : null
+        };
+      } else if (as.painScore !== undefined) {
+        state.painScores = { pre: as.painScore, during: null, post: null };
+      } else {
+        state.painScores = { pre: null, during: null, post: null };
+      }
+      state.painActivePhase = as.painActivePhase || 'pre';
       if (as.painTheme) setPainTheme(as.painTheme);
-      updatePainScale(as.painScore !== undefined ? as.painScore : null);
+      renderPainPhaseTabs();
+      renderActivePainDisplay();
 
       if (as.mbiMobilityMode) state.mbiMobilityMode = as.mbiMobilityMode;
       if (Array.isArray(as.mbiScores)) {
@@ -5001,7 +4671,10 @@
       const snapshot = captureFullAppSnapshot();
 
       const badgeParts = [];
-      if (state.painScore !== null) badgeParts.push(`Pain ${state.painScore}/10`);
+      const scoredPainPhases = ['pre', 'during', 'post'].filter(p => state.painScores[p] !== null && state.painScores[p] !== undefined);
+      if (scoredPainPhases.length) {
+        badgeParts.push(`Pain ${scoredPainPhases.map(p => `${p[0].toUpperCase()}:${state.painScores[p]}`).join('/')}/10`);
+      }
       if (mbiRes.hasData) badgeParts.push(`MBI ${mbiRes.total}/100`);
       if (dassRes.hasData) badgeParts.push(`DASS D:${dassRes.dScore} A:${dassRes.aScore} S:${dassRes.sScore}`);
       if (fmaRes.hasData) badgeParts.push(`FMA-UE ${fmaRes.total}/66`);
@@ -5274,10 +4947,13 @@
       if (sQuote) subjectiveLines.push(`- Client/Caregiver Report: ${sQuote}`);
 
       const sPainRaw = document.getElementById('s_pain').value.trim();
+      const scoredPainList = ['pre', 'during', 'post']
+        .filter(p => state.painScores[p] !== null && state.painScores[p] !== undefined)
+        .map(p => `${painPhaseNames[p]}: ${state.painScores[p]}/10`);
       if (sPainRaw) {
         subjectiveLines.push(`- Pain / Fatigue Levels: ${sPainRaw}`);
-      } else if (state.painScore !== null) {
-        subjectiveLines.push(`- Pain / Fatigue Levels: Pain rated ${state.painScore}/10.`);
+      } else if (scoredPainList.length) {
+        subjectiveLines.push(`- Pain / Fatigue Levels: ${scoredPainList.join(' | ')}`);
       }
 
       const mobItems = [];
@@ -5761,7 +5437,8 @@
       updateChoiceButtons();
       renderHandSkills();
       renderTreatments();
-      updatePainScale(null);
+      renderPainPhaseTabs();
+      renderActivePainDisplay();
       renderMBI();
       renderIADL();
       renderInterestChecklist();
